@@ -1,4 +1,8 @@
 // pages/dstingsuan/index.js
+
+const myaudio = wx.createInnerAudioContext();
+myaudio.autoplay = true;
+myaudio.obeyMuteSwitch = false;
 Page({
 
   /**
@@ -46,7 +50,7 @@ Page({
 
  
   StartListen: function(e){
-    var tmpshizi, tmpnum, num1, num2;
+    var tmpshizi, tmpnum, num1, num2, now, exitTime;
     var tmplst = []
     this.data.numberArray = []
     this.data.flag = 0;
@@ -62,29 +66,30 @@ Page({
         tmpshizi = num1.toString() + "+" + num2.toString() + "=" + (num1 + num2).toString();
       }
 
-      this.data.numberArray = this.data.numberArray.concat([tmpshizi]);
-      
-      setTimeout(function(){
-        console.log(i);
-      }, 1000)
-    }
-    
+      now = new Date();
+      exitTime = now.getTime() + 1000;
+      while (true) {
+        now = new Date();
+        if (now.getTime() > exitTime)
+          break;
+      }
+      // console.log(i)
 
-    this.setData({
+      this.data.numberArray = this.data.numberArray.concat([tmpshizi])
+      this.setData({
         numberArray: this.data.numberArray,
         flag: this.data.flag
       });
+    }
     
 
-    const innerAudioContext = wx.createInnerAudioContext();//新建一个createInnerAudioContext();
-    innerAudioContext.autoplay = true;//音频自动播放设置
-    innerAudioContext.src = './Sound/1.wav';//链接到音频的地址
-    innerAudioContext.onPlay(() => { });//播放音效
-    innerAudioContext.onError((res) => {//打印错误
-      console.log(res.errMsg);//错误信息
-      console.log(res.errCode);//错误码
-    })
-
+    // this.setData({
+    //     numberArray: this.data.numberArray,
+    //     flag: this.data.flag
+    //   });
+    
+    myaudio.src = "./Sound/1.wav";//链接到音频的地址
+    myaudio.play();
     
   },
 

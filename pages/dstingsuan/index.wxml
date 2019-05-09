@@ -10,8 +10,8 @@
   <!-- <view wx:for="{{array}}">
     {{index}}: {{item.message}}
   </view> -->
-  <text style="color: red; font-size: 48rpx;">大晟听算</text>
-  <view wx:for="{{numberArray}}">
+  <text style="color: red; font-size: 48rpx; margin-bottom:20rpx;">大晟听算</text>
+  <view wx:for="{{numberArray}}" wx:key="index">
     <view wx:if="{{flag===0}}">第{{index+1}}题: </view>
     <view wx:else>第{{index+1}}题:{{item}}</view>
   </view>
