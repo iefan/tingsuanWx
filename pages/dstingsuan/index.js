@@ -1,8 +1,5 @@
 // pages/dstingsuan/index.js
-
 const myaudio = wx.createInnerAudioContext();
-myaudio.autoplay = true;
-myaudio.obeyMuteSwitch = false;
 Page({
 
   /**
@@ -52,6 +49,17 @@ Page({
   StartListen: function(e){
     var tmpshizi, tmpnum, num1, num2, now, exitTime;
     var tmplst = []
+    // const myaudio = wx.createInnerAudioContext();
+    // myaudio.autoplay=true;
+    myaudio.src = "/Sound/1.mp3";//链接到音频的地址
+    myaudio.play();
+    // myaudio.onPlay(() => {  // 监听音频播放事件
+      // console.log('开始播放')
+    // })
+
+    // myaudio.autoplay = true;
+    // myaudio.obeyMuteSwitch = false;
+
     this.data.numberArray = []
     this.data.flag = 0;
     
@@ -88,8 +96,8 @@ Page({
     //     flag: this.data.flag
     //   });
     
-    myaudio.src = "./Sound/1.wav";//链接到音频的地址
-    myaudio.play();
+    // myaudio.src = "./Sound/1.mp3";//链接到音频的地址
+    // myaudio.play();
     
   },
 
