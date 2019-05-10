@@ -20,7 +20,9 @@ Page({
     //   { id: 0, unique: 'unique_0' },
     // ],
     numberArray: [],
-    flag : 1
+    flag : 1,
+    indexNumberArray:0,
+    curDispLst : []
 
   },
 
@@ -44,24 +46,46 @@ Page({
   //     objectArray: this.data.objectArray
   //   })
   // },
-
- 
-  StartListen: function(e){
-    var tmpshizi, tmpnum, num1, num2, now, exitTime;
-    var tmplst = []
-    // const myaudio = wx.createInnerAudioContext();
-    // myaudio.autoplay=true;
-    myaudio.src = "/Sound/1.mp3";//链接到音频的地址
+  StartListen: function (e) {
+    var  now, exitTime;
+    // var tmpLst = []
+    this.data.curDispLst = []
+    myaudio.src = "/Sound/" + this.data.indexNumberArray + ".mp3"
+    // myaudio.src = "/Sound/1.mp3";//链接到音频的地址
     myaudio.play();
-    // myaudio.onPlay(() => {  // 监听音频播放事件
-      // console.log('开始播放')
-    // })
-
-    // myaudio.autoplay = true;
-    // myaudio.obeyMuteSwitch = false;
-
-    this.data.numberArray = []
     this.data.flag = 0;
+    
+    if(this.data.indexNumberArray === this.data.numberArray.length ){
+      return;
+    }
+    this.data.indexNumberArray = this.data.indexNumberArray + 1;
+    for (let i=0; i<=this.data.indexNumberArray; ++i){
+      this.data.curDispLst.concat([this.data.numberArray[i]])
+    }
+
+    //延时1秒
+    now = new Date();
+    exitTime = now.getTime() + 1000;
+    while (true) {
+      now = new Date();
+      if (now.getTime() > exitTime)
+        break;
+    }
+
+    this.setData({
+      curDispLst: this.data.curDispLst,
+      flag: this.data.flag
+    })
+
+  },
+ 
+  Genquestion: function(e){
+    var tmpshizi, tmpnum, num1, num2, now, exitTime;
+   
+    this.data.numberArray = [];
+    this.data.curDispLst = [];
+    this.data.indexNumberArray = 0;
+    this.data.flag = 2;
     
     for (let i = 0; i < 10; ++i) {
       num1 = Math.floor(Math.random() * 100);
@@ -73,28 +97,16 @@ Page({
       } else {
         tmpshizi = num1.toString() + "+" + num2.toString() + "=" + (num1 + num2).toString();
       }
-
-      now = new Date();
-      exitTime = now.getTime() + 1000;
-      while (true) {
-        now = new Date();
-        if (now.getTime() > exitTime)
-          break;
-      }
-      // console.log(i)
-
+     
       this.data.numberArray = this.data.numberArray.concat([tmpshizi])
-      this.setData({
-        numberArray: this.data.numberArray,
-        flag: this.data.flag
-      });
+      
     }
     
 
-    // this.setData({
-    //     numberArray: this.data.numberArray,
-    //     flag: this.data.flag
-    //   });
+    this.setData({
+      curDispLst: this.data.curDispLst,
+        flag: this.data.flag
+      });
     
     // myaudio.src = "./Sound/1.mp3";//链接到音频的地址
     // myaudio.play();
@@ -105,6 +117,7 @@ Page({
     // tmp = GenQuestions();
     // this.data.numberArray.concat(tmp)
     this.data.flag = 1;
+    this.data.indexNumberArray = 0;
     this.setData({
       numberArray: this.data.numberArray,
       flag : this.data.flag
@@ -117,7 +130,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    
   },
 
   /**
