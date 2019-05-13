@@ -21,6 +21,7 @@ Page({
     //   { id: 0, unique: 'unique_0' },
     // ],
     numberArray: [],
+    // flag_over : 1
     // indexNumberArray:1,    
     // soundPathArray : []
   },
@@ -28,19 +29,16 @@ Page({
   
   StartListen: function (e) {
     // var  now, exitTime;
-    var number, shi, ge, start_next_text, flagSet;
-    this.soundPathArray = []
-    flagSet = 23;//儿子的学号
-
-    if (this.data.numberArray.length===2){
-      // ansDisabled = false;
-      // quesDisabled = true;
+    var number, shi, ge, start_next_text, flagSet, totalQuestionNum;
+    this.soundPathArray = [];
+    flagSet = 23;
+    totalQuestionNum = 10;
+    
+    if (this.data.numberArray.length === totalQuestionNum-1){
       start_next_text = "显示答案";
     }
     else{
-      // ansDisabled = true;
-      // quesDisabled = false;
-      if (start_next_text === "显示答案"){
+      if (this.data.numberArray.length === totalQuestionNum){
         start_next_text = "显示答案";
         flagSet = 1;
       }else{
@@ -48,46 +46,47 @@ Page({
       }
     }
 
-    this.NextQuestion(); //产生下一个题目
-    // number = 23;
-    for (let i=0; i<4; i++){
-      number = this.data.numberArray[this.data.numberArray.length - 1][i];  
-      if (typeof(number) === typeof(1)){
-        // bai = Math.floor(number / 100)
-        shi = Math.floor(number / 10);
-        ge = number % 10;
-        if (shi !== 0) {
-          if (shi === 1) {
-            this.soundPathArray.push("SHI");
-          } else {
-            this.soundPathArray.push(shi);
-            this.soundPathArray.push("SHI");
+    if (this.data.numberArray.length < totalQuestionNum){
+      this.NextQuestion(); //产生下一个题目
+      for (let i=0; i<4; i++){
+        number = this.data.numberArray[this.data.numberArray.length - 1][i];  
+        if (typeof(number) === typeof(1)){
+          // bai = Math.floor(number / 100)
+          shi = Math.floor(number / 10);
+          ge = number % 10;
+          if (shi !== 0) {
+            if (shi === 1) {
+              this.soundPathArray.push("SHI");
+            } else {
+              this.soundPathArray.push(shi);
+              this.soundPathArray.push("SHI");
+            }
+          }
+          if (ge !== 0) {
+            this.soundPathArray.push(ge);
+          }
+          if (shi===0 && ge===0){
+            this.soundPathArray.push(ge);
+          }
+        }else{
+          if (number=="+"){
+            this.soundPathArray.push("JIA");
+          }
+          if (number == "-") {
+            this.soundPathArray.push("JIAN");
+          }
+          if (number == "=") {
+            this.soundPathArray.push("DENGYU");
           }
         }
-        if (ge !== 0) {
-          this.soundPathArray.push(ge);
-        }
-        if (shi===0 && ge===0){
-          this.soundPathArray.push(ge);
-        }
-      }else{
-        if (number=="+"){
-          this.soundPathArray.push("JIA");
-        }
-        if (number == "-") {
-          this.soundPathArray.push("JIAN");
-        }
-        if (number == "=") {
-          this.soundPathArray.push("DENGYU");
-        }
       }
+      
+      this.innerAudioContext.src = "/Sound/" + this.soundPathArray[0] + ".mp3";
+      this.soundPathArray.splice(0, 1);
+      this.innerAudioContext.play();
     }
-    
-    this.innerAudioContext.src = "/Sound/" + this.soundPathArray[0] + ".mp3";
-    this.soundPathArray.splice(0, 1);
-    this.innerAudioContext.play();
 
-    this.data.flag = 0;    
+    // this.data.flag = 0;    
 
     // //延时1秒
     // now = new Date();
