@@ -28,8 +28,25 @@ Page({
   
   StartListen: function (e) {
     // var  now, exitTime;
-    var number, shi, ge;
+    var number, shi, ge, start_next_text, flagSet;
     this.soundPathArray = []
+    flagSet = 23;//儿子的学号
+
+    if (this.data.numberArray.length===2){
+      // ansDisabled = false;
+      // quesDisabled = true;
+      start_next_text = "显示答案";
+    }
+    else{
+      // ansDisabled = true;
+      // quesDisabled = false;
+      if (start_next_text === "显示答案"){
+        start_next_text = "显示答案";
+        flagSet = 1;
+      }else{
+        start_next_text = "下一题";
+      }
+    }
 
     this.NextQuestion(); //产生下一个题目
     // number = 23;
@@ -81,10 +98,33 @@ Page({
     //     break;
     // }
     
-    this.setData({
-      numberArray: this.data.numberArray,
-      flag:0
-    })
+    // btn = 
+    if (start_next_text === "显示答案"  && flagSet === 1){
+      this.setData({
+        numberArray: this.data.numberArray,
+        flag: 1,
+        // ansDisabled : ansDisabled,
+        // quesDisabled: quesDisabled,
+        start_next_text: "开始听题"
+      })
+      this.data.numberArray = [];
+    }else{
+      flagSet = 1;// 设置文本成功
+      this.setData({
+        numberArray: this.data.numberArray,
+        flag: 0,
+        // ansDisabled : ansDisabled,
+        // quesDisabled: quesDisabled,
+        start_next_text: start_next_text
+      })
+    }
+    // this.setData({
+    //   numberArray: this.data.numberArray,
+    //   flag:0,
+    //   // ansDisabled : ansDisabled,
+    //   // quesDisabled: quesDisabled,
+    //   start_next_text: start_next_text
+    // })
 
   },
 
@@ -115,19 +155,23 @@ Page({
   DisplayAnswer: function (e) {    
     // tmp = GenQuestions();
     // this.data.numberArray.concat(tmp)    
-    this.data.indexNumberArray = 0;
+    // this.data.indexNumberArray = 0;
+    // this.data.numberArray = []
     this.setData({
       numberArray: this.data.numberArray,
-      flag : 1
+      flag : 1,
+      quesDisabled:false,
+      ansDisable:true
       // numberArray: [1,2,3]
-    })
+    });
+    this.data.numberArray = [];
   },
 
   registerAudioContext: function(e){
     this.innerAudioContext = wx.createInnerAudioContext(); 
     this.innerAudioContext.onEnded((res) => { 
-      this.data.indexNumberArray += 1;   
-      console.log("over");
+      // this.data.indexNumberArray += 1;   
+      // console.log("over");
       if (this.soundPathArray.length > 0){
         this.innerAudioContext.src = "/Sound/" + this.soundPathArray[0] + ".mp3"
         this.innerAudioContext.play();
@@ -153,6 +197,13 @@ Page({
    */
   onLoad: function (options) {
     this.registerAudioContext();
+    this.setData(
+      {
+        start_next_text:"开始听题",
+        quesDisabled:false,
+        // ansDisable: true
+      }
+    )
     
   },
 

@@ -35,8 +35,8 @@
   <!-- <switch wx:for="{{numberArray}}" wx:key="*this" > {{item}} </switch> -->
   <view id='userbutton'>
     <!-- <button id="button" bindtap="Genquestion">生成题目 </button> -->
-    <button id="button" bindtap="StartListen">开始听题 </button>
-    <button id="button" bindtap="DisplayAnswer">显示答案 </button>
+    <button id="buttonNT" bindtap="StartListen">{{start_next_text}} </button>
+    <!-- <button id="button" bindtap="DisplayAnswer" disabled="{{ansDisabled}}">显示答案 </button> -->
   </view>
 
 </view>

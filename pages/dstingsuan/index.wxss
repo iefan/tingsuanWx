@@ -17,7 +17,7 @@
   bottom: 30rpx;
 }
 
-#button {
+#buttonNT {
   /* width: 200rpx;
   height: 100rpx;
   margin: 20rpx;
