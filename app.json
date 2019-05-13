@@ -1,5 +1,6 @@
 {
   "pages": [
+    "pages/dstingsuan_zd/index",
     "pages/dstingsuan/index",
     "pages/index/index",
     "pages/logs/logs"
