@@ -1,5 +1,6 @@
 // pages/dstingsuan/index.js
-const myaudio = wx.createInnerAudioContext();
+// const myaudio = wx.createInnerAudioContext();
+
 Page({
 
   /**
@@ -20,116 +21,138 @@ Page({
     //   { id: 0, unique: 'unique_0' },
     // ],
     numberArray: [],
-    flag : 1,
-    indexNumberArray:0,
-    curDispLst : []
-
+    // indexNumberArray:1,    
+    // soundPathArray : []
   },
 
-  // switch: function (e) {
-  //   const length = this.data.objectArray.length
-  //   for (let i = 0; i < length; ++i) {
-  //     const x = Math.floor(Math.random() * length)
-  //     const y = Math.floor(Math.random() * length)
-  //     const temp = this.data.objectArray[x]
-  //     this.data.objectArray[x] = this.data.objectArray[y]
-  //     this.data.objectArray[y] = temp
-  //   }
-  //   this.setData({
-  //     objectArray: this.data.objectArray
-  //   })
-  // },
-  // addToFront: function (e) {
-  //   const length = this.data.objectArray.length
-  //   this.data.objectArray = [{ id: length, unique: 'unique_' + length }].concat(this.data.objectArray)
-  //   this.setData({
-  //     objectArray: this.data.objectArray
-  //   })
-  // },
+  
   StartListen: function (e) {
-    var  now, exitTime;
-    // var tmpLst = []
-    this.data.curDispLst = []
-    myaudio.src = "/Sound/" + this.data.indexNumberArray + ".mp3"
-    // myaudio.src = "/Sound/1.mp3";//链接到音频的地址
-    myaudio.play();
-    this.data.flag = 0;
+    // var  now, exitTime;
+    var number, shi, ge;
+    this.soundPathArray = []
+
+    this.NextQuestion(); //产生下一个题目
+    // number = 23;
+    for (let i=0; i<4; i++){
+      number = this.data.numberArray[this.data.numberArray.length - 1][i];  
+      if (typeof(number) === typeof(1)){
+        // bai = Math.floor(number / 100)
+        shi = Math.floor(number / 10);
+        ge = number % 10;
+        if (shi !== 0) {
+          if (shi === 1) {
+            this.soundPathArray.push("SHI");
+          } else {
+            this.soundPathArray.push(shi);
+            this.soundPathArray.push("SHI");
+          }
+        }
+        if (ge !== 0) {
+          this.soundPathArray.push(ge);
+        }
+        if (shi===0 && ge===0){
+          this.soundPathArray.push(ge);
+        }
+      }else{
+        if (number=="+"){
+          this.soundPathArray.push("JIA");
+        }
+        if (number == "-") {
+          this.soundPathArray.push("JIAN");
+        }
+        if (number == "=") {
+          this.soundPathArray.push("DENGYU");
+        }
+      }
+    }
     
-    if(this.data.indexNumberArray === this.data.numberArray.length ){
-      return;
-    }
-    this.data.indexNumberArray = this.data.indexNumberArray + 1;
-    for (let i=0; i<=this.data.indexNumberArray; ++i){
-      this.data.curDispLst.concat([this.data.numberArray[i]])
-    }
+    this.innerAudioContext.src = "/Sound/" + this.soundPathArray[0] + ".mp3";
+    this.soundPathArray.splice(0, 1);
+    this.innerAudioContext.play();
 
-    //延时1秒
-    now = new Date();
-    exitTime = now.getTime() + 1000;
-    while (true) {
-      now = new Date();
-      if (now.getTime() > exitTime)
-        break;
-    }
+    this.data.flag = 0;    
 
+    // //延时1秒
+    // now = new Date();
+    // exitTime = now.getTime() + 1000;
+    // while (true) {
+    //   now = new Date();
+    //   if (now.getTime() > exitTime)
+    //     break;
+    // }
+    
     this.setData({
-      curDispLst: this.data.curDispLst,
-      flag: this.data.flag
+      numberArray: this.data.numberArray,
+      flag:0
     })
 
   },
- 
-  Genquestion: function(e){
-    var tmpshizi, tmpnum, num1, num2, now, exitTime;
-   
-    this.data.numberArray = [];
-    this.data.curDispLst = [];
-    this.data.indexNumberArray = 0;
-    this.data.flag = 2;
-    
-    for (let i = 0; i < 10; ++i) {
-      num1 = Math.floor(Math.random() * 100);
-      num2 = Math.floor(Math.random() * 100);
-      if (Math.floor(Math.random() * 10) % 2 == 1) //奇数为-，偶数为+
-      {
-        if (num1 < num2) { tmpnum = num1; num1 = num2; num2 = tmpnum; }
-        tmpshizi = num1.toString() + "-" + num2.toString() + "=" + (num1 - num2).toString();
-      } else {
-        tmpshizi = num1.toString() + "+" + num2.toString() + "=" + (num1 + num2).toString();
-      }
-     
-      this.data.numberArray = this.data.numberArray.concat([tmpshizi])
-      
-    }
-    
 
-    this.setData({
-      curDispLst: this.data.curDispLst,
-        flag: this.data.flag
-      });
-    
-    // myaudio.src = "./Sound/1.mp3";//链接到音频的地址
-    // myaudio.play();
-    
+  NextQuestion: function(e){
+    var tmpshizi, tmpnum, num1, num2, fuhao;
+    fuhao = Math.floor(Math.random() * 10) % 2;
+    num1 = Math.floor(Math.random() * 100);
+    if (fuhao == 0){
+      num2 = Math.floor(Math.random() * (100-num1));
+    }else{
+      num2 = Math.floor(Math.random() * 100);
+    }
+    if (fuhao == 1) //奇数为-，偶数为+
+    {
+      if (num1 < num2) { tmpnum = num1; num1 = num2; num2 = tmpnum; }
+      // tmpshizi = num1.toString() + "-" + num2.toString() + "=" + (num1 - num2).toString();
+      tmpshizi = [num1, '-', num2, '=', num1-num2];
+    } else {
+      // tmpshizi = num1.toString() + "+" + num2.toString() + "=" + (num1 + num2).toString();
+      tmpshizi = [num1, '+', num2, '=', num1+num2];
+    }
+    this.data.numberArray.push(tmpshizi);
+    // this.data.numberArray = this.data.numberArray.concat([tmpshizi])
+
   },
+ 
 
   DisplayAnswer: function (e) {    
     // tmp = GenQuestions();
-    // this.data.numberArray.concat(tmp)
-    this.data.flag = 1;
+    // this.data.numberArray.concat(tmp)    
     this.data.indexNumberArray = 0;
     this.setData({
       numberArray: this.data.numberArray,
-      flag : this.data.flag
+      flag : 1
       // numberArray: [1,2,3]
     })
   },
 
+  registerAudioContext: function(e){
+    this.innerAudioContext = wx.createInnerAudioContext(); 
+    this.innerAudioContext.onEnded((res) => { 
+      this.data.indexNumberArray += 1;   
+      console.log("over");
+      if (this.soundPathArray.length > 0){
+        this.innerAudioContext.src = "/Sound/" + this.soundPathArray[0] + ".mp3"
+        this.innerAudioContext.play();
+        this.soundPathArray.splice(0,1); //切除第1个
+      }
+      // if (this.data.indexNumberArray < 5){
+      //   this.innerAudioContext.src = "/Sound/" + this.data.indexNumberArray + ".mp3"
+      //   this.innerAudioContext.play();
+      // }
+    })    
+    this.innerAudioContext.onError((res) => {      // 播放音频失败的回调      
+      console.log('播放音频失败' + res);   
+    })    
+    this.innerAudioContext.onStop((res) => {   
+      // this.data.indexNumberArray += 1;   
+      console.log('播放结束!');    
+    })
+
+  },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    this.registerAudioContext();
     
   },
 
