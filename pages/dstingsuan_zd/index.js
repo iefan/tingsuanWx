@@ -86,7 +86,7 @@ Page({
     if (this.data.btnText === "显示答案"){
       // console.log(this.data.numberArrayList, '------')
       this.data.btnText = "开始听题";
-      this.data.numberArray = [];
+      this.data.numberArrayList = [];
       this.data.indexNumberArray = [];
       this.setData({
         numberArray: this.data.numberArrayList,
@@ -205,7 +205,7 @@ Page({
 
     this.registerAudioContext();
 
-    this.data.numberArray = [];
+    this.data.numberArrayList = [];
     this.data.indexNumberArray = [];
     this.setData(
       {
