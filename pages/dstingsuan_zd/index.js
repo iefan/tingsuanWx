@@ -1,6 +1,6 @@
 // pages/dstingsuan/index.js
 // const myaudio = wx.createInnerAudioContext();
-
+var app = getApp();
 Page({
 
   /**
@@ -201,15 +201,20 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    app.globalData.scene = 1;
+
     this.registerAudioContext();
+
+    this.data.numberArray = [];
+    this.data.indexNumberArray = [];
     this.setData(
       {
-        start_next_text:"开始听题",
-        // quesDisabled:false,
-        // ansDisable: true
+        numberArray: null,
+        flag: 1,
+        btnDisabled: false,
+        start_next_text: "开始听题"
       }
-    )
-    
+    )    
   },
 
   /**
@@ -223,13 +228,23 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    // console.log("show", app.globalData.scene);
+    if (app.globalData.scene == -1) {
+      app.globalData.scene = 1;
 
+      this.setData({
+        Info: null,
+      })
+      this.onLoad();
+    }
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
+    // console.log("hide", app.globalData.scene)
+    app.globalData.scene = -1;
 
   },
 
@@ -237,6 +252,7 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
+    // console.log(app.globalData.scene)
 
   },
 
