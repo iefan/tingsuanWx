@@ -7,15 +7,40 @@
 }
 
 #userbutton {
-  display: flex;
+  /* display: flex;
   flex-direction: row;
-  /* align-items: center; */
-  justify-content:space-around;
+  align-items: center;
+  justify-content:space-around; */
+
+  width: 100%;
+  position: fixed;
+  bottom: 30rpx;
 }
 
 #button {
-  width: 200rpx;
+  /* width: 200rpx;
   height: 100rpx;
   margin: 20rpx;
-  border-radius: 5%;
+  border-radius: 5%; */
+  margin-top: 30rpx;
+  width: 450rpx;
+  background: #14a1fd;
+  color: #fff;
+  border-radius: 70rpx;
 }
+
+/* .proDisp{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  line-height: 5vh;
+  border-right: 1rpx solid #ddd;
+  border-bottom: 1rpx solid #ddd;
+} */
+
+/* text{
+  line-height: 13vh;
+  border-right: 1rpx solid #ddd;
+  border-bottom: 1rpx solid #ddd;
+} */

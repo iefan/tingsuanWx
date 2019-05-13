@@ -10,16 +10,19 @@
   <!-- <view wx:for="{{array}}">
     {{index}}: {{item.message}}
   </view> -->
-  <text style="color: red; font-size: 48rpx; margin-bottom:20rpx;">大晟听算</text>
-  <view wx:if="{{flag===0}}">
+  <text style="color: red; font-size: 48rpx; margin-bottom:60rpx;">大晟听算</text>
+  <view  wx:if="{{flag===0}}">
     <view wx:for="{{numberArray}}" wx:key="index">
-      <view>第{{index+1}}题: </view>
+      <view style="color: green; font-size: 36rpx; margin-bottom:20rpx;">第{{index+1}}题: </view>
     </view>
   </view>
 
   <view wx:if="{{flag===1}}">
     <view wx:for="{{numberArray}}" wx:key="index">
-      <view>第{{index+1}}题: {{item[0]}}{{item[1]}}{{item[2]}}{{item[3]}}{{item[4]}}</view>
+      <view style="color: green; font-size: 36rpx; margin-bottom:20rpx;">
+        <text >第{{index+1}}题: </text>
+        <text>{{item[0]}}{{item[1]}}{{item[2]}}{{item[3]}}{{item[4]}}</text>
+      </view>
     </view>
   </view>
   
