@@ -13,8 +13,12 @@
   <text style="color: red; font-size: 66rpx; margin-bottom:30rpx;">大 晟 听 算</text>
   <text style="color: black; font-size: 26rpx; margin-bottom:60rpx;">（100以内加减法听算练习，每次10题，每题5秒）</text>
   <view  wx:if="{{flag===0}}">
-    <view wx:for="{{numberArray}}" wx:key="index">
-      <view style="color: green; font-weight:bold; font-size: 40rpx; margin-bottom:30rpx;">第{{index+1}}题</view>
+    <view class="table" style="color: green; font-weight:bold; font-size: 40rpx; margin-bottom:30rpx;">
+      <view class="tr" wx:for="{{numberArray}}" wx:key="index">
+        <view class="td" >第{{2*index+10}}题</view>
+        <view class="td" wx:if="{{2*(index+1)<numberArray.length}}">第{{2*index+2}}题</view>
+        <view class="td" style='white-space:pre;opacity:0.1;' wx:else>.           </view>
+      </view>
     </view>
   </view>
 

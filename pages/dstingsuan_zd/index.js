@@ -153,7 +153,7 @@ Page({
 
         //延时1秒
         now = new Date();
-        exitTime = now.getTime() + 5000;
+        exitTime = now.getTime() + 1000;
         while (true) {
           now = new Date();
           if (now.getTime() > exitTime)
