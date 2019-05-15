@@ -10,10 +10,23 @@ Page({
     numberArrayList: [],
     indexNumberArray:[],
     indexNumberArray_tr: [],
-    totalQuestion:4,
-    btnText: "开始听题"
+    totalQuestion:20,
+    btnText: "开始听题",
+    curDurationSecond : 3
   },
 
+  slider3change: function(e){
+    this.data.curDurationSecond = e.detail.value
+    // console.log('slider' + 'index' + '发生 change 事件，携带值为', e.detail.value)
+    // const pageData = {}
+    // for (let i = 1; i < 5; i++) {
+    //   (function (index) {
+    //     pageData['slider' + index + 'change'] = function (e) {
+    //       console.log('slider' + 'index' + '发生 change 事件，携带值为', e.detail.value)
+    //     }
+    //   }(i))
+    // }
+  },
   
   StartListen: function (e) {
     // var  now, exitTime;
@@ -69,8 +82,10 @@ Page({
       this.data.indexNumberArray.push(1)
 
       this.setData({
-        numberArray: this.data.indexNumberArray,
+        numberArray: [1],
+        numberArray_all: [1],
         btnDisabled : true,
+        start_next_text:"正在听题",        
         flag: 0
       })
     }
@@ -156,7 +171,7 @@ Page({
 
         //延时1秒
         now = new Date();
-        exitTime = now.getTime() + 1000;
+        exitTime = now.getTime() + 1000*this.data.curDurationSecond;
         while (true) {
           now = new Date();
           if (now.getTime() > exitTime)
@@ -174,12 +189,13 @@ Page({
           this.setData({
             numberArray: this.data.indexNumberArray_tr,
             numberArray_all : this.data.indexNumberArray,
-            flag: 0,
+            flag: 0
           })
 
         }else{
           this.data.btnText = "显示答案";
           this.data.indexNumberArray = [];
+          this.data.indexNumberArray_tr = [];
           this.setData({
             start_next_text: this.data.btnText,
             btnDisabled : false
@@ -211,7 +227,7 @@ Page({
 
     this.data.numberArrayList = [];
     this.data.indexNumberArray = [];
-    // this.data.indexNumberArray_tr = [];
+    this.data.indexNumberArray_tr = [];
     this.setData(
       {
         numberArray: null,

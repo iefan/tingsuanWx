@@ -1,4 +1,27 @@
 /* pages/dstingsuan/index.wxss */
+.descinfo{
+  color: rgb(80, 165, 245); 
+  font-size: 26rpx;
+  margin-bottom:10rpx;
+}
+
+.slide_div{
+  width:100%;
+  text-align: center;
+  /* display: flex; */
+  /* justify-content: space-between; */
+}
+
+.slide_view{
+  width:100%;
+  /* font-size: 40rpx; */
+  /* color: rgb(11, 101, 236); */
+  /* block-color: rgb(9, 90, 182); */
+  /* backgroundColor: rgb(230, 120, 17); */
+  /* display: flex; */
+  /* justify-content: center; */
+}
+
 .table {
   width: 100%;
   display: flex;
@@ -13,23 +36,23 @@
   justify-content: space-between;
 }
 .td {
-  padding: 5px;
-  border-bottom: 1px solid #dadada;
-  border-right: 1px solid #dadada;
+  padding: 10rpx;
+  border-bottom: 1rpx solid #dadada;
+  border-right: 1rpx solid #dadada;
   text-align: center;
   width:100%
 }
 .td_ans {
-  /* padding: 5px; */
+  padding: 0rpx;
   /* border-bottom: 1px solid #dadada; */
   /* border-right: 1px solid #dadada; */
   text-align: left;
   width:100%
 }
 .td_blank {
-  padding: 5px;
-  border-bottom: 1px solid #dadada;
-  border-right: 1px solid #dadada;
+  padding: 5rpx;
+  border-bottom: 1rpx solid #dadada;
+  border-right: 1rpx solid #dadada;
   text-align: center;
   width:100%;
   white-space:pre;
@@ -37,8 +60,8 @@
 }
 .td_blank_head {
   /* padding: 10px; */
-  border-bottom: 1px solid #dadada;
-  border-right: 1px solid #dadada;
+  border-bottom: 1rpx solid #dadada;
+  border-right: 1rpx solid #dadada;
   text-align: center;
   width:100%;
   white-space:pre;
