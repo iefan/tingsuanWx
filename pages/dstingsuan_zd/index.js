@@ -10,7 +10,7 @@ Page({
     numberArrayList: [],
     indexNumberArray:[],
     indexNumberArray_tr: [],
-    totalQuestion:10,
+    totalQuestion:4,
     btnText: "开始听题"
   },
 
@@ -148,8 +148,8 @@ Page({
             this.data.indexNumberArray_tr.push(1);
           }
         }
-        console.log(this.data.indexNumberArray, '--');
-        console.log(this.data.indexNumberArray_tr, '==');
+        // console.log(this.data.indexNumberArray, '--');
+        // console.log(this.data.indexNumberArray_tr, '==');
         // if (this.data.indexNumberArray.length%2===0){
           // this.data.indexNumberArray_tr.push(1)
         // }

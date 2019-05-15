@@ -13,14 +13,21 @@
   justify-content: space-between;
 }
 .td {
-  padding: 10px;
+  padding: 5px;
   border-bottom: 1px solid #dadada;
   border-right: 1px solid #dadada;
   text-align: center;
   width:100%
 }
+.td_ans {
+  /* padding: 5px; */
+  /* border-bottom: 1px solid #dadada; */
+  /* border-right: 1px solid #dadada; */
+  text-align: left;
+  width:100%
+}
 .td_blank {
-  padding: 10px;
+  padding: 5px;
   border-bottom: 1px solid #dadada;
   border-right: 1px solid #dadada;
   text-align: center;
@@ -29,7 +36,7 @@
   opacity:0.1;
 }
 .td_blank_head {
-  padding: 10px;
+  /* padding: 10px; */
   border-bottom: 1px solid #dadada;
   border-right: 1px solid #dadada;
   text-align: center;
