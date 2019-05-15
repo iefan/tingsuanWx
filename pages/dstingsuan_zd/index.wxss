@@ -19,6 +19,24 @@
   text-align: center;
   width:100%
 }
+.td_blank {
+  padding: 10px;
+  border-bottom: 1px solid #dadada;
+  border-right: 1px solid #dadada;
+  text-align: center;
+  width:100%;
+  white-space:pre;
+  opacity:0.1;
+}
+.td_blank_head {
+  padding: 10px;
+  border-bottom: 1px solid #dadada;
+  border-right: 1px solid #dadada;
+  text-align: center;
+  width:100%;
+  white-space:pre;
+  opacity:0.1;
+}
 .userinfo {
   display: flex;
   flex-direction: column;

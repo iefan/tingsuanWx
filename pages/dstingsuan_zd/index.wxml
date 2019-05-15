@@ -13,11 +13,15 @@
   <text style="color: red; font-size: 66rpx; margin-bottom:30rpx;">大 晟 听 算</text>
   <text style="color: black; font-size: 26rpx; margin-bottom:60rpx;">（100以内加减法听算练习，每次10题，每题5秒）</text>
   <view  wx:if="{{flag===0}}">
-    <view class="table" style="color: green; font-weight:bold; font-size: 40rpx; margin-bottom:30rpx;">
+    <view class="table" style="color: green; font-weight:bold; font-size: 40rpx; margin-bottom:30rpx;"> 
+      <view class="tr">
+        <view class="td_blank_head">.           </view>
+        <view class="td_blank_head">.           </view>
+      </view>     
       <view class="tr" wx:for="{{numberArray}}" wx:key="index">
-        <view class="td" >第{{2*index+10}}题</view>
-        <view class="td" wx:if="{{2*(index+1)<numberArray.length}}">第{{2*index+2}}题</view>
-        <view class="td" style='white-space:pre;opacity:0.1;' wx:else>.           </view>
+        <view class="td" >第{{2*index+1}}题</view>
+        <view class="td" wx:if="{{2*(index+1)<=numberArray_all.length}}">第{{2*index+2}}题</view>
+        <view class="td_blank" wx:else>.           </view>
       </view>
     </view>
   </view>
@@ -42,7 +46,6 @@
   <view id='userbutton'>
     <!-- <button id="button" bindtap="Genquestion">生成题目 </button> -->
     <button id="buttonNT" bindtap="StartListen" disabled="{{btnDisabled}}">{{start_next_text}} </button>
-    <!-- <button id="button" bindtap="DisplayAnswer" disabled="{{ansDisabled}}">显示答案 </button> -->
   </view>
 
 </view>

@@ -9,6 +9,7 @@ Page({
   data: {
     numberArrayList: [],
     indexNumberArray:[],
+    indexNumberArray_tr: [],
     totalQuestion:10,
     btnText: "开始听题"
   },
@@ -123,18 +124,7 @@ Page({
     // this.data.numberArray = this.data.numberArray.concat([tmpshizi])
 
   },
-
-  DisplayAnswer: function (e) {
-    this.setData({
-      numberArray: this.data.numberArray,
-      flag : 1,
-      // quesDisabled:false,
-      // ansDisable:true
-      // numberArray: [1,2,3]
-    });
-    this.data.numberArray = [];
-  },
-
+  
   registerAudioContext: function(e){
     var now, exitTime;
     this.innerAudioContext = wx.createInnerAudioContext(); 
@@ -150,6 +140,19 @@ Page({
         // console.log("开始切除一个式子：")
         // console.log(this.soundPathArray[0]);
         this.data.indexNumberArray.push(1);
+        this.data.indexNumberArray_tr = [];
+
+        //将行数加入
+        for (let i=0; i<this.data.indexNumberArray.length; i++){
+          if (i%2===0){
+            this.data.indexNumberArray_tr.push(1);
+          }
+        }
+        console.log(this.data.indexNumberArray, '--');
+        console.log(this.data.indexNumberArray_tr, '==');
+        // if (this.data.indexNumberArray.length%2===0){
+          // this.data.indexNumberArray_tr.push(1)
+        // }
 
         //延时1秒
         now = new Date();
@@ -169,7 +172,8 @@ Page({
           this.innerAudioContext.play();
           this.soundPathArray[0].splice(0, 1); //切除第1个
           this.setData({
-            numberArray: this.data.indexNumberArray,
+            numberArray: this.data.indexNumberArray_tr,
+            numberArray_all : this.data.indexNumberArray,
             flag: 0,
           })
 
@@ -207,6 +211,7 @@ Page({
 
     this.data.numberArrayList = [];
     this.data.indexNumberArray = [];
+    // this.data.indexNumberArray_tr = [];
     this.setData(
       {
         numberArray: null,
