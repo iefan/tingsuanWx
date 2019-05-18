@@ -1,8 +1,10 @@
 {
   "pages": [
-    "pages/dstingsuan_zd/index",
-    "pages/dstingsuan/index",
     "pages/index/index",
+    "pages/dstingsuan_zd/index",
+    "pages/dstingsuan_200/index",
+    "pages/dstingsuan_2plus1/index",
+    "pages/dstingsuan/index",
     "pages/logs/logs"
   ],
   "window": {

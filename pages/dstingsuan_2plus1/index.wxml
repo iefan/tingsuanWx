@@ -10,8 +10,8 @@
   <!-- <view wx:for="{{array}}">
     {{index}}: {{item.message}}
   </view> -->
-  <text style="color: red; font-size: 50rpx; margin-bottom:15rpx;">100以内加减</text>
-  <text class="descinfo" >（100以内加减法听算练习，每次20题）</text>
+  <text style="color: red; font-size: 50rpx; margin-bottom:15rpx;">两位数加减一位数</text>
+  <text class="descinfo" >（两位数加减一位数听算练习，每次20题）</text>
 
   <view class="slide_div">
     <text class="section__title">设置答题时间（秒）</text>
@@ -37,8 +37,8 @@
   <view wx:if="{{flag===1}}">
     <view wx:for="{{numberArray}}" wx:key="index" class="table" style="color: green; font-weight:bold; font-size: 34rpx;">
       <view wx:if="{{index===0}}" class="tr">
-        <view class="td_blank_head">.                                 </view>
-        <view class="td_blank_head">.                                 </view>
+        <view class="td_blank_head">.                                  </view>
+        <view class="td_blank_head">.                                  </view>
       </view>
       <view wx:if="{{index<numberArray.length/2}}" class="tr" >
         <view class="td_ans">第{{2*(index+1)-1}}题:{{numberArray[2*index][0]}}{{numberArray[2*index][1]}}{{numberArray[2*index][2]}}{{numberArray[2*index][3]}}{{numberArray[2*index][4]}}</view>

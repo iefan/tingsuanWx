@@ -120,12 +120,9 @@ Page({
     var tmpshizi, tmpnum, num1, num2, fuhao;
     for (let i = 0; i < this.data.totalQuestion; i++){
       fuhao = Math.floor(Math.random() * 10) % 2;
-      num1 = Math.floor(Math.random() * 100);
-      if (fuhao == 0) {
-        num2 = Math.floor(Math.random() * (100 - num1));
-      } else {
-        num2 = Math.floor(Math.random() * 100);
-      }
+      num1 = Math.floor(Math.random() * 90) + 10;
+      num2 = Math.floor(Math.random() * 90) + 10;
+      
       if (fuhao == 1) //奇数为-，偶数为+
       {
         if (num1 < num2) { tmpnum = num1; num1 = num2; num2 = tmpnum; }
@@ -144,14 +141,8 @@ Page({
   registerAudioContext: function(e){
     var now, exitTime;
     this.innerAudioContext = wx.createInnerAudioContext(); 
-    // this.innerAudioContext.onPlay((res) => {
-    //   // console.log(app.globalData.scene,);
-    //   if (app.globalData.scene == -2){
-    //     this.innerAudioContext.stop();
-    //   }
-    // });
     this.innerAudioContext.onEnded((res) => { 
-      console.log(app.globalData.scene, this.soundPathArray.length);
+      // console.log(app.globalData.scene, this.soundPathArray.length);
       if (app.globalData.scene == -2){
         return;
       }
@@ -279,7 +270,7 @@ Page({
    */
   onHide: function () {
     // var now, exitTime;
-    // console.log("hide", app.globalData.scene)
+    console.log("hide", app.globalData.scene)
     app.globalData.scene = -1;
     this.innerAudioContext.stop();
 

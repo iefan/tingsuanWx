@@ -1,13 +1,22 @@
 <!--index.wxml-->
 <view class="container">
-  <view class="userinfo">
-    <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
-    <block wx:else>
-      <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
-      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
-    </block>
+  <view class="dsTitle">
+    <text style="color: red; font-size: 66rpx;">大 晟 听 算</text>
+  </view>
+  <view class="userinfo">  
+    <!-- <button open-type="getUserInfo" bindtap="Grade2Tinsuan"> 100以内加减 </button> -->
+    <button class="buttonNT" bindtap="Grade2Tinsuan"> 100以内加减 </button>
+    <button class="buttonNT" bindtap="Grade2_2Tinsuan"> 两位数加减法 </button>
+    <button class="buttonNT" bindtap="Grade1Tinsuan"> 2位数加减1位数 </button>
+    
   </view>
   <view class="usermotto">
-    <text class="user-motto">{{motto}}</text>
+    <view>
+      <text class="user-motto">{{motto}}</text>
+    </view>
+    <view>
+      <image class="gongzhonghao" src="/Sound/gongzhonghao.jpg"></image>
+    </view>
+    
   </view>
 </view>
