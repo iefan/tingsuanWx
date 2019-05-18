@@ -223,6 +223,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    console.log("onload", app.globalData.scene)
     app.globalData.scene = 1;
 
     this.registerAudioContext();
@@ -253,6 +254,8 @@ Page({
    */
   onShow: function () {
     console.log("show", app.globalData.scene);
+    // 当页面返回主菜单时，调用unload，再来到此页面，调用onload，再调用onshow，此时不用显示调用onload，否则会重复，
+    // 当页面被隐藏时，调用hide，再来到此页面，调用onshow，再显示调用onload，所以此处要进行判断
     if (app.globalData.scene == -1) {
       app.globalData.scene = 1;
 
@@ -260,7 +263,7 @@ Page({
         Info: null,
       })
       if (app.globalData.scene == 1){
-        thos.onLoad();
+        this.onLoad();
       }
     }
   },
@@ -289,7 +292,7 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-    // console.log("Onunload",app.globalData.scene)
+    console.log("Onunload",app.globalData.scene)
     app.globalData.scene = -2;
     this.innerAudioContext.stop();
     // console.log("Onunload_-1", app.globalData.scene)

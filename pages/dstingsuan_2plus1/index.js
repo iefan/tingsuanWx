@@ -293,7 +293,7 @@ Page({
         Info: null,
       })
       if (app.globalData.scene == 1){
-        thos.onLoad();
+        this.onLoad();
       }
     }
   },
