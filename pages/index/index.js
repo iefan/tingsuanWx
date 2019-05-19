@@ -10,6 +10,12 @@ Page({
     // canIUse: wx.canIUse('button.open-type.getUserInfo')
   },
   //事件处理函数
+  Grade99Tinsuan: function () {
+    wx.navigateTo({
+      url: '../dstingsuan_99times/index'
+    })
+  },
+
   Grade2_2Tinsuan: function(){
     wx.navigateTo({
       url: '../dstingsuan_200/index'

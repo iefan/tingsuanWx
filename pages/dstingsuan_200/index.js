@@ -258,13 +258,14 @@ Page({
     // 当页面被隐藏时，调用hide，再来到此页面，调用onshow，再显示调用onload，所以此处要进行判断
     if (app.globalData.scene == -1) {
       app.globalData.scene = 1;
+      this.innerAudioContext.play();
 
-      this.setData({
-        Info: null,
-      })
-      if (app.globalData.scene == 1){
-        this.onLoad();
-      }
+      // this.setData({
+      //   Info: null,
+      // })
+      // if (app.globalData.scene == 1){
+      //   this.onLoad();
+      // }
     }
   },
 

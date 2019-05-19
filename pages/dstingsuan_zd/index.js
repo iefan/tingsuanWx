@@ -151,7 +151,7 @@ Page({
     //   }
     // });
     this.innerAudioContext.onEnded((res) => { 
-      console.log(app.globalData.scene, this.soundPathArray.length);
+      // console.log(app.globalData.scene, this.soundPathArray.length);
       if (app.globalData.scene == -2){
         return;
       }
@@ -261,16 +261,17 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    console.log("show", app.globalData.scene);
+    // console.log("show", app.globalData.scene);
     if (app.globalData.scene == -1) {
       app.globalData.scene = 1;
+      this.innerAudioContext.play();
 
-      this.setData({
-        Info: null,
-      })
-      if (app.globalData.scene == 1){
-        this.onLoad();
-      }
+      // this.setData({
+      //   Info: null,
+      // })
+      // if (app.globalData.scene == 1){
+      //   this.onLoad();
+      // }
     }
   },
 
