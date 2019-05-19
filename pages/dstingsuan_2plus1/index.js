@@ -120,19 +120,15 @@ Page({
     var tmpshizi, tmpnum, num1, num2, fuhao;
     for (let i = 0; i < this.data.totalQuestion; i++){
       fuhao = Math.floor(Math.random() * 10) % 2;
-      num1 = Math.floor(Math.random() * 100);
+      num1 = Math.floor(Math.random() * 99) + 1;
       if (fuhao == 0) {
         if (num1<10){
-          //第1个数是个位数，则第二个数可以是任意两位数
-          if (Math.floor(Math.random() * 10) % 2 === 1){
-            num2 = Math.floor(Math.random() * 100);
-          }else{
-            num2 = Math.floor(Math.random() * 10)*10;
-          }
+          //第1个数是个位数，则第二个数可以是任意小于(100-num1)两位数
+          num2 = Math.floor(Math.random() * (100-num1-10))+10;
         }else {
           //第1个数是两位数，则第二个数有两种情况，1、num1<=90，则num2是任意个位数都可以，2、num1>90，则num2<100-num1
           if (num1<=90){
-            num2 = Math.floor(Math.random()*10);
+            num2 = Math.floor(Math.random()*9)+1;
           }else{
             num2 = Math.floor(Math.random()*(100-num1));
           }
@@ -140,19 +136,19 @@ Page({
       } else {
         // 减法
         if (num1<10){
-          // num2 = Math.floor(Math.random() * 100);
-          if (Math.floor(Math.random() * 10) % 2 === 1) {
-            num2 = Math.floor(Math.random() * 100);
-          } else {
-            num2 = Math.floor(Math.random() * 10) * 10;
-          }
+          num2 = Math.floor(Math.random() * 90)+10;
+          // if (Math.floor(Math.random() * 10) % 2 === 1) {
+          //   num2 = Math.floor(Math.random() * 100);
+          // } else {
+          //   num2 = Math.floor(Math.random() * 10) * 10;
+          // }
         }else{
-          num2 = Math.floor(Math.random() * 10);
+          // num2 = Math.floor(Math.random() * 10);
           if (Math.floor(Math.random() * 10) % 2 === 1) {
-            num2 = Math.floor(Math.random() * (Math.floor(num1/10)))*10;
+            num2 = Math.floor(Math.random() * (Math.floor(num1/10)-1))*10 + 10;
             // num2 = Math.floor(Math.random() * 100);
           } else {
-            num2 = Math.floor(Math.random() * 10);
+            num2 = Math.floor(Math.random() * 9) + 1;
           }
         }
       }
