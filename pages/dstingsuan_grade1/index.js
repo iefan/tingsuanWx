@@ -10,26 +10,27 @@ Page({
     // canIUse: wx.canIUse('button.open-type.getUserInfo')
   },
   //事件处理函数
-  Grade99Tinsuan: function () {
+  Grade1Tinsuan_10: function () {
     wx.navigateTo({
-      url: '../dstingsuan_99times/index'
+      url: '../dstingsuan_10plus/index'
     })
   },
 
-  Grade2_2Tinsuan: function(){
+  Grade1Tinsuan_20: function () {
     wx.navigateTo({
-      url: '../dstingsuan_200/index'
+      url: '../dstingsuan_20plus/index'
     })
   },
 
-  Grade2Tinsuan: function() {
+  Grade1Tinsuan_50: function () {
     wx.navigateTo({
-      url: '../dstingsuan_zd/index'
+      url: '../dstingsuan_50plus/index'
     })
   },
-  Grade1Tinsuan: function(){
+
+  Grade1Tinsuan_2plus1: function(){
     wx.navigateTo({
-      url: '../dstingsuan_grade1/index'
+      url: '../dstingsuan_2plus1/index'
     })
   },
 

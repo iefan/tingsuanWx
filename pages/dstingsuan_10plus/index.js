@@ -10,7 +10,7 @@ Page({
     numberArrayList: [],
     indexNumberArray:[],
     indexNumberArray_tr: [],
-    totalQuestion:20,
+    totalQuestion:10,
     btnText: "开始听题",
     curDurationSecond : 3
   },
@@ -120,38 +120,14 @@ Page({
     var tmpshizi, tmpnum, num1, num2, fuhao;
     for (let i = 0; i < this.data.totalQuestion; i++){
       fuhao = Math.floor(Math.random() * 10) % 2;
-      num1 = Math.floor(Math.random() * 99) + 1;
-      if (fuhao == 0) {
-        if (num1<10){
-          //第1个数是个位数，则第二个数可以是任意小于(100-num1)两位数
-          num2 = Math.floor(Math.random() * (100-num1-10))+10;
-        }else {
-          //第1个数是两位数，则第二个数有两种情况，1、num1<=90，则num2是任意个位数都可以，2、num1>90，则num2<100-num1
-          if (num1<=90){
-            num2 = Math.floor(Math.random()*9)+1;
-          }else{
-            num2 = Math.floor(Math.random()*(100-num1));
-          }
-        }
-      } else {
-        // 减法
-        if (num1<10){
-          num2 = Math.floor(Math.random() * 90)+10;
-          // if (Math.floor(Math.random() * 10) % 2 === 1) {
-          //   num2 = Math.floor(Math.random() * 100);
-          // } else {
-          //   num2 = Math.floor(Math.random() * 10) * 10;
-          // }
-        }else{
-          // num2 = Math.floor(Math.random() * 10);
-          if (Math.floor(Math.random() * 10) % 2 === 1) {
-            num2 = Math.floor(Math.random() * (Math.floor(num1/10)-1))*10 + 10;
-            // num2 = Math.floor(Math.random() * 100);
-          } else {
-            num2 = Math.floor(Math.random() * 9) + 1;
-          }
-        }
+      num1 = Math.floor(Math.random() * 10) + 1;
+      if (num1 == 10){
+        num2 = 0;
+      }else{
+        num2 = Math.floor(Math.random() * (10-num1))+1;
       }
+      // num2 = Math.floor(Math.random() * (10 - num1));
+      
       if (fuhao == 1) //奇数为-，偶数为+
       {
         if (num1 < num2) { tmpnum = num1; num1 = num2; num2 = tmpnum; }
@@ -252,6 +228,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    console.log("onload", app.globalData.scene)
     app.globalData.scene = 1;
 
     this.registerAudioContext();
@@ -281,7 +258,9 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    // console.log("show", app.globalData.scene);
+    console.log("show", app.globalData.scene);
+    // 当页面返回主菜单时，调用unload，再来到此页面，调用onload，再调用onshow，此时不用显示调用onload，否则会重复，
+    // 当页面被隐藏时，调用hide，再来到此页面，调用onshow，再显示调用onload，所以此处要进行判断
     if (app.globalData.scene == -1) {
       app.globalData.scene = 1;
       this.innerAudioContext.play();
@@ -303,6 +282,7 @@ Page({
     // console.log("hide", app.globalData.scene)
     app.globalData.scene = -1;
     this.innerAudioContext.pause();
+
     // now = new Date();
     // exitTime = now.getTime() + 300;
     // while (true) {
@@ -318,7 +298,7 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-    // console.log("Onunload",app.globalData.scene)
+    console.log("Onunload",app.globalData.scene)
     app.globalData.scene = -2;
     this.innerAudioContext.stop();
     // console.log("Onunload_-1", app.globalData.scene)

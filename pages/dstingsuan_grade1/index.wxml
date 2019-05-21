@@ -1,14 +1,14 @@
 <!--index.wxml-->
 <view class="container">
   <view class="dsTitle">
-    <text style="color: red; font-size: 66rpx;">大 晟 听 算</text>
+    <text style="color: red; font-size: 66rpx; ">大 晟 听 算</text>
   </view>
   <view class="userinfo">  
     <!-- <button open-type="getUserInfo" bindtap="Grade2Tinsuan"> 100以内加减 </button> -->
-    <button class="buttonNT" bindtap="Grade2Tinsuan"> 100以内加减 </button>
-    <button class="buttonNT" bindtap="Grade2_2Tinsuan"> 两位数加减法 </button>
-    <button class="buttonNT" bindtap="Grade99Tinsuan"> 表内乘除法 </button>
-    <button class="buttonNT_grade1" bindtap="Grade1Tinsuan"> 一年级听算练习 </button>
+    <button class="buttonNT" bindtap="Grade1Tinsuan_10"> 10以内加减法 </button>
+    <button class="buttonNT" bindtap="Grade1Tinsuan_20"> 20以内加减法 </button>
+    <button class="buttonNT" bindtap="Grade1Tinsuan_50"> 50以内加减法 </button>
+    <button class="buttonNT" bindtap="Grade1Tinsuan_2plus1"> 2位数加减1位数 </button>    
     
   </view>
   <view class="usermotto">

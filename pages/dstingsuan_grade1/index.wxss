@@ -13,15 +13,6 @@
   top: 30rpx;
 }
 
-.buttonNT_grade1{
-  margin-top: 20rpx;
-  margin-bottom: 20rpx;
-  width: 450rpx;
-  background: #fdab14;
-  color: #fff;
-  border-radius: 70rpx;
-}
-
 .buttonNT{
   margin-top: 20rpx;
   margin-bottom: 20rpx;

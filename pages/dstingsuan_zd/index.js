@@ -282,7 +282,7 @@ Page({
     // var now, exitTime;
     // console.log("hide", app.globalData.scene)
     app.globalData.scene = -1;
-    this.innerAudioContext.stop();
+    this.innerAudioContext.pause();
 
     // now = new Date();
     // exitTime = now.getTime() + 300;
