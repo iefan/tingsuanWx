@@ -121,12 +121,15 @@ Page({
     for (let i = 0; i < this.data.totalQuestion; i++){
       fuhao = Math.floor(Math.random() * 10) % 2;
       num1 = Math.floor(Math.random() * 10) + 1;
-      if (num1 == 10){
-        num2 = 0;
+      if (fuhao == 0){
+        if (num1 == 10){
+          num2 = 0
+        }else{
+          num2 = Math.floor(Math.random() * (10 - num1)) + 1;
+        }
       }else{
-        num2 = Math.floor(Math.random() * (10-num1))+1;
+        num2 = Math.floor(Math.random() * 10) + 1;
       }
-      // num2 = Math.floor(Math.random() * (10 - num1));
       
       if (fuhao == 1) //奇数为-，偶数为+
       {

@@ -12,7 +12,7 @@ Page({
   },
   //事件处理函数
   hechengceshi: function () {
-    
+    this.innerAudioContext = wx.createInnerAudioContext();
     //合成语音
     // this.ceshi();
     let that=this;
@@ -126,7 +126,7 @@ Page({
   },
 
   onLoad: function () {
-    this.innerAudioContext = wx.createInnerAudioContext();
+    
     // if (app.globalData.userInfo) {
     //   this.setData({
     //     userInfo: app.globalData.userInfo,
