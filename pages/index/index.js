@@ -5,7 +5,8 @@ const app = getApp()
 Page({
   data: {
     motto: '反馈请扫描',
-    mytok:[]   
+    mytok:[],
+    savedFilePath:[]
     // userInfo: {},
     // hasUserInfo: false,
     // canIUse: wx.canIUse('button.open-type.getUserInfo')
@@ -19,6 +20,26 @@ Page({
     var url1 = "http://tsn.baidu.com/text2audio?lan=zh&ctp=1&cuid=abcdxxx&tok=" + this.data.mytok['access_token'] + "&tex=" + encodeURI(encodeURI("潘晟(sheng4)尧，欢迎您来到大晟(sheng4)听算！"))+ "&vol=9&per=0&spd=5&pit=5&aue=3"
     // var url = "https://tsn.baidu.com/text2audio?txt=" + encodeURI(encodeURI('1+1=2')) + "&lan=zh&tok=" + this.data.mytok['access_token'] + "&cuid=Iklsljfdskl21&ctp=1&spd=5";
     console.log(url1);
+
+    // wx.downloadFile({
+    //   url: url1,
+    //   success(res){
+    //     if (res.statusCode === 200){
+    //       console.log(res.tempFilePath)
+    //       wx.saveFile({
+    //         tempFilePath: res.tempFilePath,
+    //         success(res1) {
+    //           console.log(res1.savedFilePath),
+    //           that.setData({                
+    //             savedFilePath : res1
+    //           }) 
+    //           // console.log(savedFilePath)             
+    //         }
+    //       })
+    //     }
+    //   }
+    // })
+    // console.log(that.data.savedFilePath, 'shiji');
     // console.log(encodeURI(encodeURI("1+1=2")));
     // console.log(encodeURI(encodeURI("百度你好")));
     that.innerAudioContext.src = url1;
