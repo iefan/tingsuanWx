@@ -1,7 +1,7 @@
 <!--pages/dstingsuan/index.wxml-->
 <view class="userinfo">
   <text style="color: red; font-size: 50rpx; margin-bottom:15rpx;">10以内的加减法</text>
-  <text class="descinfo" >（10以内的加减法听算练习，每次20题）</text>
+  <text class="descinfo" >（10以内的加减法听算练习，每次10题）</text>
 
   <view class="slide_div">
     <text class="section__title">设置答题时间（秒）</text>

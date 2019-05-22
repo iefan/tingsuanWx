@@ -5,13 +5,47 @@ const app = getApp()
 Page({
   data: {
     motto: '反馈请扫描',
-    mytok:[],
-    savedFilePath:[]
+    mytok:[]
+    // savedFilePath:[]
     // userInfo: {},
     // hasUserInfo: false,
     // canIUse: wx.canIUse('button.open-type.getUserInfo')
   },
   //事件处理函数
+  checkUpdate: function () {
+    //检查是否存在新版本
+    wx.getUpdateManager().onCheckForUpdate(function (res) {
+      // 请求完新版本信息的回调
+      console.log("是否有新版本：" + res.hasUpdate);
+      if (res.hasUpdate) {//如果有新版本
+
+        // 小程序有新版本，会主动触发下载操作（无需开发者触发）
+        wx.getUpdateManager().onUpdateReady(function () {//当新版本下载完成，会进行回调
+          wx.showModal({
+            title: '更新提示',
+            content: '新版本已经准备好，单击确定重启应用',
+            showCancel: false,
+            success: function (res) {
+              if (res.confirm) {
+                // 新的版本已经下载好，调用 applyUpdate 应用新版本并重启
+                wx.getUpdateManager().applyUpdate();
+              }
+            }
+          })
+
+        })
+
+        // 小程序有新版本，会主动触发下载操作（无需开发者触发）
+        wx.getUpdateManager().onUpdateFailed(function () {//当新版本下载失败，会进行回调
+          wx.showModal({
+            title: '提示',
+            content: '检查到有新版本，但下载失败，请检查网络设置',
+            showCancel: false,
+          })
+        })
+      }
+    });
+  },
   //下载合成音频文件
   hechengDownload: function(){
     this.innerAudioContext = wx.createInnerAudioContext();
@@ -173,41 +207,7 @@ Page({
   },
  
   onLoad: function () {
-    this.ceshi();
-    // this.hechengDownload();
-    // if (app.globalData.userInfo) {
-    //   this.setData({
-    //     userInfo: app.globalData.userInfo,
-    //     hasUserInfo: true
-    //   })
-    // } else if (this.data.canIUse){
-    //   // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-    //   // 所以此处加入 callback 以防止这种情况
-    //   app.userInfoReadyCallback = res => {
-    //     this.setData({
-    //       userInfo: res.userInfo,
-    //       hasUserInfo: true
-    //     })
-    //   }
-    // } else {
-    //   // 在没有 open-type=getUserInfo 版本的兼容处理
-    //   wx.getUserInfo({
-    //     success: res => {
-    //       app.globalData.userInfo = res.userInfo
-    //       this.setData({
-    //         userInfo: res.userInfo,
-    //         hasUserInfo: true
-    //       })
-    //     }
-    //   })
-    // }
+    this.checkUpdate();
+    // this.ceshi();
   },
-  // Grade2Tinsuan: function(e) {
-  //   console.log(e)
-  //   app.globalData.userInfo = e.detail.userInfo
-  //   this.setData({
-  //     userInfo: e.detail.userInfo,
-  //     hasUserInfo: true
-  //   })
-  // }
 })
