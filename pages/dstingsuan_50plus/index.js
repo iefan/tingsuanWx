@@ -9,39 +9,37 @@ Page({
   data: {
     numberArrayList: [],
     indexNumberArray:[],
-    indexNumberArray_tr: [],
+    // indexNumberArray_tr: [],
     totalQuestion:20,
     btnText: "开始听题",
-    curDurationSecond : 3
+    soundBaiduStringArray : [],
+    curDurationSecond : 3,
+    items: [
+      { name: 0, value: '离线慢速', checked: 'true'},
+      { name: 1, value: '在线快速' },
+    ]
   },
-
+  radioChange(e) {
+    // console.log('radio发生change事件，携带value值为：', e.detail.value)
+    app.globalData.autoBaiduVoice = e.detail.value;
+  },
   slider3change: function(e){
-    this.data.curDurationSecond = e.detail.value
-    // console.log('slider' + 'index' + '发生 change 事件，携带值为', e.detail.value)
-    // const pageData = {}
-    // for (let i = 1; i < 5; i++) {
-    //   (function (index) {
-    //     pageData['slider' + index + 'change'] = function (e) {
-    //       console.log('slider' + 'index' + '发生 change 事件，携带值为', e.detail.value)
-    //     }
-    //   }(i))
-    // }
+    this.data.curDurationSecond = e.detail.value;
   },
   
   StartListen: function (e) {
     // var  now, exitTime;
-    var number, shi, ge, start_next_text, tmpsoundarr, tmpdisparr;
+    var number, shi, ge, start_next_text, tmpsoundarr, tmpsoundstr;
     this.soundPathArray = [];
-    // flagSet = 23;
-    // totalQuestionNum = 2;
-    // console.log(this.data.btnText==="", "btntext");
+    var lstNumberHanzi = ["零", "一", "二", "三", "四", "五", "六", "七", "八", "九"];
+
     if (this.data.btnText === "开始听题"){
+      this.data.soundBaiduStringArray = [];
       this.data.numberArrayList = []
       this.GenAllQuestion();//产生所有数组
-      // console.log(this.data.numberArray, this.data.numberArray.length, '0000第一次');
       for (let j = 0; j < this.data.numberArrayList.length; j++) {
-        // console.log(this.data.numberArrayList[j]);
         tmpsoundarr = [];
+        tmpsoundstr = "";
         for (let i = 0; i < 4; i++) {
           number = this.data.numberArrayList[j][i];
           if (typeof (number) === typeof (1)) {
@@ -51,163 +49,186 @@ Page({
             if (shi !== 0) {
               if (shi === 1) {
                 tmpsoundarr.push("SHI");
+                tmpsoundstr += "十";
               } else {
                 tmpsoundarr.push(shi);
                 tmpsoundarr.push("SHI");
+                tmpsoundstr += lstNumberHanzi[shi];
+                tmpsoundstr += "十";
               }
             }
             if (ge !== 0) {
               tmpsoundarr.push(ge);
+              tmpsoundstr += lstNumberHanzi[ge];
             }
             if (shi === 0 && ge === 0) {
               tmpsoundarr.push(ge);
+              tmpsoundstr += lstNumberHanzi[ge];
             }
           } else {
             if (number == "+") {
               tmpsoundarr.push("JIA");
+              tmpsoundstr += "加";
             }
             if (number == "-") {
               tmpsoundarr.push("JIAN");
+              tmpsoundstr += "减";
             }
             if (number == "=") {
               tmpsoundarr.push("DENGYU");
+              tmpsoundstr += "等于";
             }
           }
         }
         // tmpsoundarr.push("ds");
         this.soundPathArray.push(tmpsoundarr);
+        this.data.soundBaiduStringArray.push(tmpsoundstr)
       }
-      this.innerAudioContext.src = "/Sound/" + this.soundPathArray[0][0] + ".mp3";
-      this.soundPathArray[0].splice(0, 1);
-      this.innerAudioContext.play();
-      this.data.indexNumberArray.push(1)
+      if (app.globalData.autoBaiduVoice ==0){
+        this.innerAudioContext.src = "/Sound/" + this.soundPathArray[0][0] + ".mp3";
+        this.soundPathArray[0].splice(0, 1);
+        this.innerAudioContext.play();
+        this.data.indexNumberArray.push(1);
+      }else{
+        this.innerAudioContext.src =  "http://tsn.baidu.com/text2audio?lan=zh&ctp=1&cuid=abcdxxx&tok=" + app.globalData.baidutoken['access_token'] + "&tex=" + encodeURI(encodeURI(this.data.soundBaiduStringArray[0])) + "&vol=9&per=0&spd=5&pit=5&aue=3";
+        this.data.soundBaiduStringArray.splice(0, 1);
+        this.innerAudioContext.play();
+        this.data.indexNumberArray.push(1);
+      }
 
       this.setData({
         numberArray: [1],
         numberArray_all: [1],
         btnDisabled : true,
+        online_disable:true,
         start_next_text:"正在听题",        
         flag: 0
       })
     }
-
-    // //延时1秒
-    // now = new Date();
-    // exitTime = now.getTime() + 1000;
-    // while (true) {
-    //   now = new Date();
-    //   if (now.getTime() > exitTime)
-    //     break;
-    // }
-    // console.log(this.data.numberArrayList, '+++++')
+   
     if (this.data.btnText === "显示答案"){
-      // console.log(this.data.numberArrayList, '------')
       this.data.btnText = "开始听题";
-      // this.data.numberArrayList = [];
       this.data.indexNumberArray = [];
       this.setData({
         numberArray: this.data.numberArrayList,
         flag: 1,
         btnDisabled : false,
-        start_next_text: this.data.btnText
+        start_next_text: this.data.btnText,
+        online_disable: false
       })
       this.data.numberArrayList = [];
     }
-
   },
 
   GenAllQuestion: function (e) {
     var tmpshizi, tmpnum, num1, num2, fuhao;
-    for (let i = 0; i < this.data.totalQuestion; i++){
+    for (let i = 0; i < this.data.totalQuestion; i++) {
       fuhao = Math.floor(Math.random() * 10) % 2;
       num1 = Math.floor(Math.random() * 50) + 1;
-      num2 = Math.floor(Math.random() * (50-num1));
-      
+      num2 = Math.floor(Math.random() * (50 - num1));
+
       if (fuhao == 1) //奇数为-，偶数为+
       {
         if (num1 < num2) { tmpnum = num1; num1 = num2; num2 = tmpnum; }
-        // tmpshizi = num1.toString() + "-" + num2.toString() + "=" + (num1 - num2).toString();
         tmpshizi = [num1, '-', num2, '=', num1 - num2];
       } else {
-        // tmpshizi = num1.toString() + "+" + num2.toString() + "=" + (num1 + num2).toString();
         tmpshizi = [num1, '+', num2, '=', num1 + num2];
       }
       this.data.numberArrayList.push(tmpshizi);
     }
-    // this.data.numberArray = this.data.numberArray.concat([tmpshizi])
-
   },
   
   registerAudioContext: function(e){
     var now, exitTime;
     this.innerAudioContext = wx.createInnerAudioContext(); 
+    // this.innerAudioContext.onPlay((res) => {
+    //   // console.log(app.globalData.scene,);
+    //   if (app.globalData.scene == -2){
+    //     this.innerAudioContext.stop();
+    //   }
+    // });
     this.innerAudioContext.onEnded((res) => { 
       // console.log(app.globalData.scene, this.soundPathArray.length);
       if (app.globalData.scene == -2){
         return;
       }
-      // this.data.indexNumberArray += 1;   
-      // console.log("over");
-      // console.log(this.soundPathArray[0]);
-      if (this.soundPathArray[0].length > 0){
-        this.innerAudioContext.src = "/Sound/" + this.soundPathArray[0][0] + ".mp3"
-        this.innerAudioContext.play();
-        this.soundPathArray[0].splice(0,1); //切除第1个
-      }else{
-        // console.log("开始切除一个式子：")
-        // console.log(this.soundPathArray[0]);
-        this.data.indexNumberArray.push(1);
-        this.data.indexNumberArray_tr = [];
+      // console.log(this.data.soundBaiduStringArray)
+      if (app.globalData.autoBaiduVoice ==0){
+        if (this.soundPathArray[0].length > 0){
+          this.innerAudioContext.src = "/Sound/" + this.soundPathArray[0][0] + ".mp3"
+          this.innerAudioContext.play();
+          this.soundPathArray[0].splice(0,1); //切除第1个
+        }else{
+          // console.log("开始切除一个式子：")
+          // console.log(this.soundPathArray[0]);
+          this.data.indexNumberArray.push(1);
 
-        //将行数加入
-        for (let i=0; i<this.data.indexNumberArray.length; i++){
-          if (i%2===0){
-            this.data.indexNumberArray_tr.push(1);
+          //延时1秒
+          now = new Date();
+          exitTime = now.getTime() + 1000*this.data.curDurationSecond;
+          while (true) {
+            now = new Date();
+            if (now.getTime() > exitTime)
+              break;
+          }
+          
+          //切除第一个式子
+          this.soundPathArray.splice(0, 1); 
+          if (this.soundPathArray.length != 0){
+            this.innerAudioContext.src = "/Sound/" + this.soundPathArray[0][0] + ".mp3"
+            this.innerAudioContext.play();
+            this.soundPathArray[0].splice(0, 1); //切除第1个
+            this.setData({
+              numberArray: this.data.indexNumberArray,
+              numberArray_all : this.data.indexNumberArray,
+              flag: 0
+            })
+          }else{
+            this.data.btnText = "显示答案";
+            this.data.indexNumberArray = [];
+            this.setData({
+              start_next_text: this.data.btnText,
+              btnDisabled : false,
+              online_disable:false
+              // quesDisabled: false,
+              // ansDisable: true
+            })
           }
         }
-        // console.log(this.data.indexNumberArray, '--');
-        // console.log(this.data.indexNumberArray_tr, '==');
-        // if (this.data.indexNumberArray.length%2===0){
-          // this.data.indexNumberArray_tr.push(1)
-        // }
-
+      }else{
+        //自动播放声音
+        this.data.indexNumberArray.push(1);
         //延时1秒
         now = new Date();
-        exitTime = now.getTime() + 1000*this.data.curDurationSecond;
+        exitTime = now.getTime() + 1000 * this.data.curDurationSecond;
         while (true) {
           now = new Date();
           if (now.getTime() > exitTime)
             break;
         }
-        // console.log("callback");
-        // console.log(this.data.indexNumberArray);
-        // console.log(this.data.numberArray, this.data.numberArray.length);
-        
-        this.soundPathArray.splice(0, 1); //切除第一个式子
-        if (this.soundPathArray.length != 0){
-          this.innerAudioContext.src = "/Sound/" + this.soundPathArray[0][0] + ".mp3"
+
+        //设置view
+        if (this.data.soundBaiduStringArray.length != 0) {
+          this.innerAudioContext.src = "http://tsn.baidu.com/text2audio?lan=zh&ctp=1&cuid=abcdxxx&tok=" + app.globalData.baidutoken['access_token'] + "&tex=" + encodeURI(encodeURI(this.data.soundBaiduStringArray[0])) + "&vol=9&per=0&spd=5&pit=5&aue=3";
           this.innerAudioContext.play();
-          this.soundPathArray[0].splice(0, 1); //切除第1个
+          this.data.soundBaiduStringArray.splice(0, 1);
           this.setData({
-            numberArray: this.data.indexNumberArray_tr,
-            numberArray_all : this.data.indexNumberArray,
+            numberArray: this.data.indexNumberArray,
+            numberArray_all: this.data.indexNumberArray,
             flag: 0
           })
-
-        }else{
+        } else {
           this.data.btnText = "显示答案";
           this.data.indexNumberArray = [];
-          this.data.indexNumberArray_tr = [];
           this.setData({
             start_next_text: this.data.btnText,
-            btnDisabled : false
+            btnDisabled: false,
+            online_disable:false
             // quesDisabled: false,
             // ansDisable: true
           })
         }
       }
-      
-      // 
     })    
     this.innerAudioContext.onError((res) => {      // 播放音频失败的回调      
       console.log('播放音频失败' + res);   
@@ -219,24 +240,62 @@ Page({
 
   },
 
+  checkUpdate: function(){
+    //检查是否存在新版本
+    wx.getUpdateManager().onCheckForUpdate(function (res) {
+      // 请求完新版本信息的回调
+      console.log("是否有新版本：" + res.hasUpdate);
+      if (res.hasUpdate) {//如果有新版本
+
+        // 小程序有新版本，会主动触发下载操作（无需开发者触发）
+        wx.getUpdateManager().onUpdateReady(function () {//当新版本下载完成，会进行回调
+          wx.showModal({
+            title: '更新提示',
+            content: '新版本已经准备好，单击确定重启应用',
+            showCancel: false,
+            success: function (res) {
+              if (res.confirm) {
+                // 新的版本已经下载好，调用 applyUpdate 应用新版本并重启
+                wx.getUpdateManager().applyUpdate();
+              }
+            }
+          })
+
+        })
+
+        // 小程序有新版本，会主动触发下载操作（无需开发者触发）
+        wx.getUpdateManager().onUpdateFailed(function () {//当新版本下载失败，会进行回调
+          wx.showModal({
+            title: '提示',
+            content: '检查到有新版本，但下载失败，请检查网络设置',
+            showCancel: false,
+          })
+        })
+      }
+    });
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    console.log("onload", app.globalData.scene)
+    this.checkUpdate();
+
     app.globalData.scene = 1;
+    app.globalData.autoBaiduVoice = 0;
 
     this.registerAudioContext();
 
     this.data.numberArrayList = [];
     this.data.indexNumberArray = [];
     this.data.indexNumberArray_tr = [];
+    this.data.soundBaiduStringArray = [];
     this.soundPathArray = []
     this.setData(
       {
         numberArray: null,
         flag: 1,
         btnDisabled: false,
+        online_disable:false,
         start_next_text: "开始听题"
       }
     )    
@@ -253,9 +312,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    console.log("show", app.globalData.scene);
-    // 当页面返回主菜单时，调用unload，再来到此页面，调用onload，再调用onshow，此时不用显示调用onload，否则会重复，
-    // 当页面被隐藏时，调用hide，再来到此页面，调用onshow，再显示调用onload，所以此处要进行判断
+    // console.log("show", app.globalData.scene);
     if (app.globalData.scene == -1) {
       app.globalData.scene = 1;
       this.innerAudioContext.play();
@@ -293,7 +350,7 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-    console.log("Onunload",app.globalData.scene)
+    // console.log("Onunload",app.globalData.scene)
     app.globalData.scene = -2;
     this.innerAudioContext.stop();
     // console.log("Onunload_-1", app.globalData.scene)

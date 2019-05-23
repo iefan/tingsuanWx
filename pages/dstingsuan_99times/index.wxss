@@ -4,7 +4,9 @@
   font-size: 26rpx;
   margin-bottom:10rpx;
 }
-
+.radio{
+  margin:30rpx;
+}
 .slide_div{
   width:100%;
   text-align: center;
@@ -28,9 +30,16 @@
   flex-direction: column;
   justify-content: space-between;
 }
-
-.tr {
+.tr_ans {
   width: 100%;
+  /* width: 500rpx; */
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.tr {
+  /* width: 100%; */
+  width: 500rpx;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -40,7 +49,8 @@
   border-bottom: 1rpx solid #dadada;
   border-right: 1rpx solid #dadada;
   text-align: center;
-  width:100%
+  /* width: 250rpx; */
+  width:50%;
 }
 .td_ans {
   padding: 10rpx;
@@ -50,13 +60,13 @@
   width:100%
 }
 .td_blank {
-  padding: 5rpx;
+  padding: 10rpx;
   border-bottom: 1rpx solid #dadada;
   border-right: 1rpx solid #dadada;
   text-align: center;
-  width:100%;
+  width:50%;
   white-space:pre;
-  opacity:0.1;
+  opacity:0;
 }
 .td_blank_head {
   /* padding: 10px; */

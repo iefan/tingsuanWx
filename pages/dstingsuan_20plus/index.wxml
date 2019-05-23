@@ -1,7 +1,7 @@
 <!--pages/dstingsuan/index.wxml-->
 <view class="userinfo">
-  <text style="color: red; font-size: 50rpx; margin-bottom:15rpx;">20以内的加减法</text>
-  <text class="descinfo" >（20以内的加减法听算练习，每次20题）</text>
+  <text style="color: red; font-size: 50rpx; margin-bottom:15rpx;">20以内加减</text>
+  <text class="descinfo" >（20以内加减法听算练习，每次20题）</text>
 
   <view class="slide_div">
     <text class="section__title">设置答题时间（秒）</text>
@@ -10,27 +10,34 @@
     </view>
   </view>
 
+<radio-group class="radio-group" bindchange="radioChange">
+  <label class="radio" wx:for="{{items}}" wx:key="index">
+    <radio value="{{item.name}}" checked="{{item.checked}}" disabled="{{online_disable}}"/>
+    {{item.value}}
+  </label>
+</radio-group>
+
   <view  wx:if="{{flag===0}}">
-    <view class="table" style="color: green; font-weight:bold; font-size: 40rpx; margin-bottom:30rpx;"> 
-      <view class="tr">
-        <view class="td_blank_head">.                     </view>
-        <view class="td_blank_head">.                     </view>
-      </view>     
-      <view class="tr" wx:for="{{numberArray}}" wx:key="index">
-        <view class="td" >第{{2*index+1}}题</view>
-        <view class="td" wx:if="{{2*(index+1)<=numberArray_all.length}}">第{{2*index+2}}题</view>
-        <view class="td_blank" wx:else>.           </view>
+    <view wx:for="{{numberArray}}" wx:key="index" class="table" style="color: green; font-weight:bold; font-size: 40rpx; margin-bottom:0rpx;"> 
+      <view wx:if="{{index<numberArray.length/2}}" class="tr" >
+        <view class="td" >第{{2*(index+1)-1}}题</view>
+        <view class="td" wx:if="{{(numberArray.length-2*(index+1))>=0}}">第{{2*(index+1)}}题</view>
+        <view class="td_blank" wx:else>第20题</view>
       </view>
+      <!-- <view wx:if="{{index===0}}" class="tr">
+        <view class="td_blank_head">.                     </view>
+        <view class="td_blank_head">.                     </view>
+      </view>  -->
     </view>
   </view>
 
   <view wx:if="{{flag===1}}">
     <view wx:for="{{numberArray}}" wx:key="index" class="table" style="color: green; font-weight:bold; font-size: 34rpx;">
-      <view wx:if="{{index===0}}" class="tr">
-        <view class="td_blank_head">第00题:00+00=00  </view>
-        <view class="td_blank_head">第00题:00+00=00  </view>
+      <view wx:if="{{index===0}}" class="tr_ans">
+        <view class="td_blank_head">.                                 </view>
+        <view class="td_blank_head">.                                 </view>
       </view>
-      <view wx:if="{{index<numberArray.length/2}}" class="tr" >
+      <view wx:if="{{index<numberArray.length/2}}" class="tr_ans" >
         <view class="td_ans">第{{2*(index+1)-1}}题:{{numberArray[2*index][0]}}{{numberArray[2*index][1]}}{{numberArray[2*index][2]}}{{numberArray[2*index][3]}}{{numberArray[2*index][4]}}</view>
         <view class="td_ans">第{{2*(index+1)}}题:{{numberArray[2*index+1][0]}}{{numberArray[2*index+1][1]}}{{numberArray[2*index+1][2]}}{{numberArray[2*index+1][3]}}{{numberArray[2*index+1][4]}}</view>
       </view>
