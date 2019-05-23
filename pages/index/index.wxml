@@ -8,6 +8,7 @@
     <button class="buttonNT" bindtap="Grade2Tinsuan"> 100以内加减 </button>
     <button class="buttonNT" bindtap="Grade2_2Tinsuan"> 两位数加减法 </button>
     <button class="buttonNT" bindtap="Grade99Tinsuan"> 表内乘除法 </button>
+    <button class="buttonNT" bindtap="Grade99DivTinsuan"> 表内有余数除法 </button>
     <button class="buttonNT_grade1" bindtap="Grade1Tinsuan"> 一年级听算练习 </button>
     <!-- <button class="buttonNT" bindtap="ceshi"> 测试在线语音合成 </button> -->
     <!-- <button class="buttonNT" bindtap="hechengceshi"> 测试在线语音合成2 </button> -->

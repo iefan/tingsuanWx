@@ -181,7 +181,11 @@ Page({
     // console.log("items====:", this.data.mytok);
   },
 
-  
+  Grade99DivTinsuan: function () {
+    wx.navigateTo({
+      url: '../dstingsuan_99div/index'
+    })
+  },
 
   Grade99Tinsuan: function () {
     wx.navigateTo({
