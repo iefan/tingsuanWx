@@ -36,6 +36,7 @@ App({
       success: function (res) {
         // console.log(res.data['expires_in']);
         that.globalData.baidutoken = res.data
+        console.log(res.data)
         // that.setData({
         //   baidutoken: res.data
         // })
@@ -45,7 +46,7 @@ App({
 
   onLaunch: function () {
     // console.log('123');
-    this.getBaiduToken();
+    // this.getBaiduToken();
     // 展示本地存储能力
     // var logs = wx.getStorageSync('logs') || []
     // logs.unshift(Date.now())
@@ -61,7 +62,9 @@ App({
   globalData: {
     userInfo: null,
     scene : 0,
-    baidutoken:[],
+    baidutoken: {
+      "access_token":"24.6cdff12af1744bcedc1f33d6ce7b4535.2592000.1561243751.282335-16302304"},
     autoBaiduVoice:0
+
   }
 })
