@@ -23,8 +23,8 @@
   <view  wx:if="{{flag===0}}">
     <view class="table" style="color: green; font-weight:bold; font-size: 40rpx; margin-bottom:30rpx;"> 
       <view class="tr">
-        <view class="td_blank_head">第00题   </view>
-        <view class="td_blank_head">第00题   </view>
+        <view class="td_blank_head">第00题     </view>
+        <view class="td_blank_head">第00题     </view>
       </view>     
       <view class="tr" wx:for="{{numberArray}}" wx:key="index">
         <view class="td" >第{{2*index+1}}题</view>

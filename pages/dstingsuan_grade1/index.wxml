@@ -2,6 +2,7 @@
 <view class="container">
   <view class="dsTitle">
     <text style="color: red; font-size: 66rpx; ">大 晟 听 算</text>
+    <view><text class="descinfo" >（一年级）</text></view>
   </view>
   <view class="userinfo">  
     <!-- <button open-type="getUserInfo" bindtap="Grade2Tinsuan"> 100以内加减 </button> -->

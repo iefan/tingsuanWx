@@ -181,30 +181,18 @@ Page({
     // console.log("items====:", this.data.mytok);
   },
 
-  Grade99DivTinsuan: function () {
-    wx.navigateTo({
-      url: '../dstingsuan_99div/index'
-    })
-  },
-
-  Grade99Tinsuan: function () {
-    wx.navigateTo({
-      url: '../dstingsuan_99times/index'
-    })
-  },
-
   Grade2_2Tinsuan: function(){
     wx.navigateTo({
       url: '../dstingsuan_200/index'
     })
   },
 
-  Grade2Tinsuan: function() {
+  Grade2Tingsuan: function() {
     wx.navigateTo({
-      url: '../dstingsuan_zd/index'
+      url: '../dstingsuan_grade2/index'
     })
   },
-  Grade1Tinsuan: function(){
+  Grade1Tingsuan: function(){
     wx.navigateTo({
       url: '../dstingsuan_grade1/index'
     })

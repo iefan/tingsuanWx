@@ -111,9 +111,9 @@ Page({
     var tmpshizi, tmpnum, num1, num2, num3, fuhao;
     for (let i = 0; i < this.data.totalQuestion; i++){
       // fuhao = Math.floor(Math.random() * 10) % 2;
-      num1 = Math.floor(Math.random() * 9) + 1;
-      num2 = Math.floor(Math.random() * 9) + 1;
-      num3 = Math.floor(Math.random() * (Math.min(num1, num2)-2))+2
+      num1 = Math.floor(Math.random() * 8) + 2;
+      num2 = Math.floor(Math.random() * 8) + 2;
+      num3 = Math.floor(Math.random() * (num1-1))+1
       tmpshizi = [num1 * num2 + num3, "÷", num1, '=',num2, num3]
      
       this.data.numberArrayList.push(tmpshizi);

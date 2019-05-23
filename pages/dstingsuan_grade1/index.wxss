@@ -5,6 +5,11 @@
   align-items: center;
 }
 
+.descinfo{
+  color: rgba(223, 124, 10, 0.829); 
+  font-size: 36rpx;
+  margin-bottom:10rpx;
+}
 .dsTitle {
   width: 100%;
   /* position:absolute; */

@@ -5,6 +5,12 @@
   align-items: center;
 }
 
+.descinfo{
+  color: rgba(223, 124, 10, 0.829); 
+  font-size: 36rpx;
+  margin-bottom:10rpx;
+}
+
 .dsTitle {
   width: 100%;
   /* position:absolute; */
@@ -14,26 +20,10 @@
 }
 
 .buttonNT_grade1{
-  margin-top: 40rpx;
+  margin-top: 20rpx;
   margin-bottom: 20rpx;
   width: 450rpx;
   background: #fdab14;
-  color: #fff;
-  border-radius: 70rpx;
-}
-
-.line{
-margin: 20rpx auto;
-width: 400rpx;
-height: 4rpx;
-background-color: rgb(240, 113, 9);
-}
-
-.buttonNT_grade2{
-  margin-top: 50rpx;
-  margin-bottom: 60rpx;
-  width: 450rpx;
-  background: #f7760c;
   color: #fff;
   border-radius: 70rpx;
 }
