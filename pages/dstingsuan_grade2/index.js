@@ -31,6 +31,6 @@ Page({
     })
   },
   onLoad: function () {
-    // this.ceshi();
+    app.checkUpdate();
   },
 })

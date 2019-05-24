@@ -133,36 +133,24 @@ Page({
     var tmpshizi, tmpnum, num1, num2, fuhao;
     for (let i = 0; i < this.data.totalQuestion; i++){
       fuhao = Math.floor(Math.random() * 10) % 2;
-      num1 = Math.floor(Math.random() * 100);
-      if (fuhao == 0) {
-        num2 = Math.floor(Math.random() * (100 - num1));
-      } else {
-        num2 = Math.floor(Math.random() * 100);
-      }
+      num1 = Math.floor(Math.random() * 90) + 10;
+      
       if (fuhao == 1) //奇数为-，偶数为+
       {
+        num2 = Math.floor(Math.random() * 90) + 10;
         if (num1 < num2) { tmpnum = num1; num1 = num2; num2 = tmpnum; }
-        // tmpshizi = num1.toString() + "-" + num2.toString() + "=" + (num1 - num2).toString();
         tmpshizi = [num1, '-', num2, '=', num1 - num2];
       } else {
-        // tmpshizi = num1.toString() + "+" + num2.toString() + "=" + (num1 + num2).toString();
+        num2 = Math.floor(Math.random() * (100 - num1 - 10)) + 10;
         tmpshizi = [num1, '+', num2, '=', num1 + num2];
       }
       this.data.numberArrayList.push(tmpshizi);
     }
-    // this.data.numberArray = this.data.numberArray.concat([tmpshizi])
-
   },
   
   registerAudioContext: function(e){
     var now, exitTime;
-    this.innerAudioContext = wx.createInnerAudioContext(); 
-    // this.innerAudioContext.onPlay((res) => {
-    //   // console.log(app.globalData.scene,);
-    //   if (app.globalData.scene == -2){
-    //     this.innerAudioContext.stop();
-    //   }
-    // });
+    this.innerAudioContext = wx.createInnerAudioContext();     
     this.innerAudioContext.onEnded((res) => { 
       // console.log(app.globalData.scene, this.soundPathArray.length);
       if (app.globalData.scene == -2){
@@ -255,46 +243,11 @@ Page({
     })
 
   },
-
-  checkUpdate: function(){
-    //检查是否存在新版本
-    wx.getUpdateManager().onCheckForUpdate(function (res) {
-      // 请求完新版本信息的回调
-      console.log("是否有新版本：" + res.hasUpdate);
-      if (res.hasUpdate) {//如果有新版本
-
-        // 小程序有新版本，会主动触发下载操作（无需开发者触发）
-        wx.getUpdateManager().onUpdateReady(function () {//当新版本下载完成，会进行回调
-          wx.showModal({
-            title: '更新提示',
-            content: '新版本已经准备好，单击确定重启应用',
-            showCancel: false,
-            success: function (res) {
-              if (res.confirm) {
-                // 新的版本已经下载好，调用 applyUpdate 应用新版本并重启
-                wx.getUpdateManager().applyUpdate();
-              }
-            }
-          })
-
-        })
-
-        // 小程序有新版本，会主动触发下载操作（无需开发者触发）
-        wx.getUpdateManager().onUpdateFailed(function () {//当新版本下载失败，会进行回调
-          wx.showModal({
-            title: '提示',
-            content: '检查到有新版本，但下载失败，请检查网络设置',
-            showCancel: false,
-          })
-        })
-      }
-    });
-  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.checkUpdate();
+    app.checkUpdate();
 
     app.globalData.scene = 1;
     app.globalData.autoBaiduVoice = 0;

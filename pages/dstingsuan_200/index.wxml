@@ -34,8 +34,8 @@
   <view wx:if="{{flag===1}}">
     <view wx:for="{{numberArray}}" wx:key="index" class="table" style="color: green; font-weight:bold; font-size: 34rpx;">
       <view wx:if="{{index===0}}" class="tr_ans">
-        <view class="td_blank_head">.                                   </view>
-        <view class="td_blank_head">.                                   </view>
+        <view class="td_blank_head">第20题:99+99=999</view>
+        <view class="td_blank_head">第20题:99+99=999</view>
       </view>
       <view wx:if="{{index<numberArray.length/2}}" class="tr_ans" >
         <view class="td_ans">第{{2*(index+1)-1}}题:{{numberArray[2*index][0]}}{{numberArray[2*index][1]}}{{numberArray[2*index][2]}}{{numberArray[2*index][3]}}{{numberArray[2*index][4]}}</view>
