@@ -12,6 +12,12 @@ Page({
     // canIUse: wx.canIUse('button.open-type.getUserInfo')
   },
   //事件处理函数
+  ceshi: function(){
+    // console.log(1)
+    wx.navigateTo({
+      url: '../dstingsuan_test/index'
+    })
+  },
   //下载合成音频文件
   welcomeDsTinsuan: function(){
     this.innerAudioContext = wx.createInnerAudioContext();

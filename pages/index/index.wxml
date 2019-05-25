@@ -12,7 +12,7 @@
     <button class="buttonNT" bindtap="Grade99DivTinsuan"> 表内有余数除法 </button> -->
     <button class="buttonNT_grade2" bindtap="Grade2Tingsuan"> 二年级听算练习 </button>
     <button class="buttonNT_grade1" bindtap="Grade1Tingsuan"> 一年级听算练习 </button>
-    <!-- <button class="buttonNT" bindtap="ceshi"> 测试在线语音合成 </button> -->
+    <button class="buttonNT" bindtap="ceshi"> 测试在线答题 </button>
     <!-- <button class="buttonNT" bindtap="hechengceshi"> 测试在线语音合成2 </button> -->
     
   </view>
