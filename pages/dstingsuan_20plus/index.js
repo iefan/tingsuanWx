@@ -129,12 +129,21 @@ Page({
 
       if (fuhao == 1) //奇数为-，偶数为+
       {
-        num2 = Math.floor(Math.random() * 20) + 1;
+        if(num1>=10){
+          num2 = Math.floor(Math.random() * 20) + 1;          
+        }else{
+          num2 = Math.floor(Math.random() * 10) + 11;
+        }
         if (num1 < num2) { tmpnum = num1; num1 = num2; num2 = tmpnum; }
         tmpshizi = [num1, '-', num2, '=', num1 - num2];
       } else {
-        num2 = Math.floor(Math.random() * (20 - num1-1)) + 1;
-        tmpshizi = [num1, '+', num2, '=', num1 + num2];
+        if(num1>=10){
+          num2 = Math.floor(Math.random() * (20 - num1 - 1)) + 1;
+          tmpshizi = [num1, '+', num2, '=', num1 + num2];
+        }else{
+          num2 = Math.floor(Math.random() * 10) + 10;
+          tmpshizi = [num1, '+', num2-num1, '=', num2];
+        }
       }
       this.data.numberArrayList.push(tmpshizi);
     }

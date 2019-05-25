@@ -81,6 +81,9 @@ App({
 
   onLaunch: function () {
     this.checkUpdate();
+    wx.setKeepScreenOn({
+      keepScreenOn: true
+    })
     // console.log('123');
     // this.getBaiduToken();
     // 展示本地存储能力
