@@ -2,8 +2,9 @@
 .ans_input{
   background: rgb(255,255,255);
   height: 90%;
-  width: 120rpx;
+  width: 25%;
   margin-top: 15rpx;
+  color:#fdab14d8
 }
 .descinfo{
   color: rgb(80, 165, 245); 
@@ -37,11 +38,12 @@
   justify-content: space-between;
 }
 .tr_ans {
-  width: 100%;
+  /* width: 100%; */
   /* width: 500rpx; */
+  width: 600rpx;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  /* justify-content: space-between; */
 }
 .tr {
   /* width: 100%; */
@@ -50,6 +52,10 @@
   flex-direction: row;
   justify-content: space-between;
 }
+.resultDesc{
+  color: rgb(226, 137, 19);
+  font-size: 36rpx;
+}
 .td {
   padding: 10rpx;
   border-bottom: 1rpx solid #dadada;
@@ -57,13 +63,38 @@
   text-align: center;
   /* width: 250rpx; */
   width:25%;
+  color:#0533caf1;
 }
 .td_ans {
+  margin-left: 30rpx;
   padding: 10rpx;
   border-bottom: 1px solid #dadada;
   border-right: 1px solid #dadada;
   text-align: left;
-  width:100%
+  width:70%
+}
+.td_ans_head {
+  padding: 10rpx;
+  border-bottom: 1px solid #dadada;
+  border-right: 1px solid #dadada;
+  text-align: left;
+  width:15%
+}
+.td_ans_wrong {
+  padding: 10rpx;
+  border-bottom: 1px solid #dadada;
+  border-right: 1px solid #dadada;
+  text-align: left;
+  color: rgb(241, 11, 11);
+  width:15%
+}
+.td_ans_right {
+  padding: 10rpx;
+  border-bottom: 1px solid #dadada;
+  border-right: 1px solid #dadada;
+  text-align: left;
+  color: rgb(41, 134, 4);
+  width:15%
 }
 .td_blank {
   padding: 10rpx;
@@ -74,12 +105,21 @@
   white-space:pre;
   opacity:0;
 }
+.td_blank_head1 {
+  padding: 10px;
+  border-bottom: 1rpx solid #dadada;
+  border-right: 1rpx solid #dadada;
+  text-align: center;
+  width:15%;
+  white-space:pre;
+  opacity:0;
+}
 .td_blank_head {
   padding: 10px;
   border-bottom: 1rpx solid #dadada;
   border-right: 1rpx solid #dadada;
   text-align: center;
-  width:100%;
+  width:80%;
   white-space:pre;
   opacity:0;
 }
@@ -88,6 +128,31 @@
   flex-direction: column;
   align-items: center;
   /* justify-content:flex-end; */
+}
+
+.scrollwindow{
+  margin-left: 100rpx;
+  width: 100%;
+}
+
+.timeinfo
+{
+  position: fixed;
+  text-align: center;
+  margin-left: 15rpx;
+  margin-top: 20rpx;
+}
+.disptime{
+  /* width: 100%; */
+  position: fixed;
+  bottom: 30rpx;
+  /* margin-top: 30rpx; */
+  margin-left: 30rpx;
+  width: 120rpx;
+  height: 100rpx;
+  background: #fd8514da;
+  color: rgb(102, 16, 16);
+  border-radius: 150rpx;
 }
 
 #userbutton {
@@ -107,7 +172,7 @@
   margin: 20rpx;
   border-radius: 5%; */
   margin-top: 30rpx;
-  width: 450rpx;
+  width: 400rpx;
   background: #14a1fd;
   color: #fff;
   border-radius: 70rpx;

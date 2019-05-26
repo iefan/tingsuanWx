@@ -1,6 +1,6 @@
 <!--pages/dstingsuan/index.wxml-->
 <view class="userinfo">
-  <text style="color: red; font-size: 50rpx; margin-bottom:15rpx;">在线测试两位数加减</text>
+  <text style="color: red; font-size: 50rpx; margin-bottom:15rpx;">两位数加减在线测试</text>
   <text class="descinfo" >（两位数加减法听算测试，每次20题）</text>
 
   <view class="slide_div">
@@ -16,41 +16,72 @@
     {{item.value}}
   </label>
 </radio-group> -->
-
-  <view  wx:if="{{flag===0}}">
+  <scroll-view class="scrollwindow"
+    scroll-y=True
+    style="height: {{scrollHeight}}rpx;"
+    scroll-into-view="{{toView}}"
+    scroll-top="{{scrollTop}}"
+    wx:if="{{flag===0}}"
+  >
+  <!-- <view  wx:if="{{flag===0}}"> -->
     <view wx:for="{{numberArray}}" wx:key="index" class="table" style="color: green; font-weight:bold; font-size: 40rpx; margin-bottom:0rpx;"> 
       <view wx:if="{{index<numberArray.length/2}}" class="tr" >
         <view class="td" >第{{2*(index+1)-1}}题</view>
-        <view class="ans_input"><input type="number" placeholder="" /></view>
+        <view class="ans_input"><input type="number" bindblur="inputans" id="{{2*(index+1)-1}}" focus="True" placeholder="" /></view>
         <view class="td" wx:if="{{(numberArray.length-2*(index+1))>=0}}">第{{2*(index+1)}}题</view>
         <view class="td_blank" wx:else>第20题</view>
-        <view class="ans_input" wx:if="{{(numberArray.length-2*(index+1))>=0}}"><input type="number" placeholder="" /></view>
+        <view class="ans_input" wx:if="{{(numberArray.length-2*(index+1))>=0}}"><input type="number" bindblur="inputans" id="{{2*(index+1)}}" focus="True" placeholder="" /></view>
       </view>
-      <!-- <view wx:if="{{index===0}}" class="tr">
-        <view class="td_blank_head">.                     </view>
-        <view class="td_blank_head">.                     </view>
-      </view>  -->
+      
     </view>
-  </view>
+  <!-- </view> -->
+    <view wx:for="{{blankScrollItem}}" wx:key="index" class="table" style="color: green; font-weight:bold; font-size: 40rpx; margin-bottom:0rpx;"> 
+        <view class="tr" >
+            <view class="td_blank_head">第20题</view>
+            <view class="td_blank_head">第20题</view>
+        </view>
+    </view> 
+  </scroll-view>
 
   <view wx:if="{{flag===1}}">
     <view wx:for="{{numberArray}}" wx:key="index" class="table" style="color: green; font-weight:bold; font-size: 34rpx;">
       <view wx:if="{{index===0}}" class="tr_ans">
-        <view class="td_blank_head">第20题:99+99=999</view>
-        <view class="td_blank_head">第20题:99+99=999</view>
+        <view class="td_ans">试题及答案</view>
+        <view class="td_ans_head">作答</view>
+        <view class="td_ans_head">结果</view>
       </view>
-      <view wx:if="{{index<numberArray.length/2}}" class="tr_ans" >
-        <view class="td_ans">第{{2*(index+1)-1}}题:{{numberArray[2*index][0]}}{{numberArray[2*index][1]}}{{numberArray[2*index][2]}}{{numberArray[2*index][3]}}{{numberArray[2*index][4]}}</view>
-        <view class="td_ans">第{{2*(index+1)}}题:{{numberArray[2*index+1][0]}}{{numberArray[2*index+1][1]}}{{numberArray[2*index+1][2]}}{{numberArray[2*index+1][3]}}{{numberArray[2*index+1][4]}}</view>
+      <view  class="tr_ans" >
+        <view class="td_ans">第{{index+1}}题：{{numberArray[index][0]}}{{numberArray[index][1]}}{{numberArray[index][2]}}{{numberArray[index][3]}}{{numberArray[index][4]}}</view>
+        <view wx:if="{{numberArray[index][6]===1}}" class="td_ans_right"> {{numberArray[index][5]}}</view>
+        <view wx:if="{{numberArray[index][6]===0}}" class="td_ans_wrong"> {{numberArray[index][6]}}</view>
+        <view wx:if="{{numberArray[index][6]===1}}" class="td_ans_right">正确</view>
+        <view wx:if="{{numberArray[index][6]===0}}" class="td_ans_wrong">错误</view>
       </view>
     </view>
+
+    <view class="tr_ans">
+      <view class="td_blank">.</view>
+    </view>
+
+    <view class="tr_ans">
+      <view class="resultDesc">{{resultDesc_txt}}</view>
+    </view>
+
+    <view wx:for="{{numberArray}}" wx:key="index" class="table" style="color: green; font-weight:bold; font-size: 34rpx;">
+      <view wx:if="{{index<=4}}" class="tr_ans">
+        <view class="td_blank">.</view>
+        <view class="td_blank">.</view>
+        <view class="td_blank">.</view>
+      </view>
+    </view>
+    
   </view>
   
-  <view><text>{{dispTimer_text}}</text></view>
-
   <view id='userbutton'>
     <!-- <button id="button" bindtap="Genquestion">生成题目 </button> -->
     <button id="buttonNT" bindtap="StartListen" disabled="{{btnDisabled}}">{{start_next_text}} </button>
   </view>
 
 </view>
+
+<view class="disptime"><text class="timeinfo">{{dispTimer_text}}</text></view>

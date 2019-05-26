@@ -15,6 +15,8 @@ Page({
     soundBaiduStringArray : [],
     curDurationSecond : 3,
     myTimerHandler : -1,
+    now_Second:0,
+    // userInputAnser : [],
     items: [
       { name: 0, value: '离线慢速', checked: 'true'},
       { name: 1, value: '在线快速' },
@@ -30,15 +32,46 @@ Page({
   slider3change: function(e){
     this.data.curDurationSecond = e.detail.value;
   },
+
+  inputans: function(e){
+    var curans;
+    curans = new Number(e.currentTarget.id)-1;
+    // this.data.userInputAnser[curans] = e.detail.value;
+    if (this.data.numberArrayList[curans].length==7){
+      this.data.numberArrayList[curans][5] = e.detail.value % 1000;
+    }else{
+      this.data.numberArrayList[curans].push(e.detail.value % 1000)
+    }
+    if (e.detail.value % 1000 == this.data.numberArrayList[curans][4]){
+      this.data.numberArrayList[curans][6]= 1;
+    }else{
+      this.data.numberArrayList[curans][6] = 0 ;
+    }
+    
+    // console.log(e.detail.value)
+    // console.log(new Number(e.currentTarget.id), 'num')
+
+
+  },
   
   StartListen: function (e) {
     // var  now, exitTime;
-    var number, shi, ge, start_next_text, tmpsoundarr, tmpsoundstr;
-    var now_Second = 0;
+    var number, shi, ge, start_next_text, tmpsoundarr, tmpsoundstr, ansRight, ansWrong, nowsecond;
+    // this.data.now_Second = 0;
+    nowsecond = -6;
     let that = this;
 
     this.soundPathArray = [];
     var lstNumberHanzi = ["零", "一", "二", "三", "四", "五", "六", "七", "八", "九"];
+
+    //设置流动窗口的高度
+    wx.getSystemInfo({
+      success: function (res) {
+        that.setData({
+          scrollHeight: res.windowHeight*1.2
+        });
+      }
+    });
 
     if (this.data.btnText === "开始听题"){
       this.data.soundBaiduStringArray = [];
@@ -97,37 +130,69 @@ Page({
         this.innerAudioContext.play();
         this.data.indexNumberArray.push(1);
       }else{
-        this.innerAudioContext.src =  "http://tsn.baidu.com/text2audio?lan=zh&ctp=1&cuid=abcdxxx&tok=" + app.globalData.baidutoken['access_token'] + "&tex=" + encodeURI(encodeURI(this.data.soundBaiduStringArray[0])) + "&vol=9&per=0&spd=5&pit=5&aue=3";
+        this.innerAudioContext.src = "http://tsn.baidu.com/text2audio?lan=zh&ctp=1&cuid=abcdxxx&tok=" + app.globalData.baidutoken['access_token'] + "&tex=" + encodeURI(encodeURI("现在准备听题：倒计时，3。。。。。。。。。2。。。。。。。。。1。。。。。。。。。开始。。。。。。。。。" + this.data.soundBaiduStringArray[0])) + "&vol=9&per=0&spd=5&pit=5&aue=3";
         this.data.soundBaiduStringArray.splice(0, 1);
         this.innerAudioContext.play();
         this.data.indexNumberArray.push(1);
       }
       
       this.data.myTimerHandler = setInterval(function(){
-        now_Second += 1
-        that.setData({
-          dispTimer_text: "已进行："+now_Second+"秒"
-        })
+        // that.data.now_Second += 1;
+        nowsecond += 1
+        if (nowsecond>0){
+          that.setData({
+            now_Second: nowsecond,
+            dispTimer_text: nowsecond+"秒",
+            blankScrollItem: lstNumberHanzi, //补充空格
+            scrollTop: Math.floor((nowsecond-10) / (10 + that.data.curDurationSecond)) * (20 - that.data.curDurationSecond)
+          })
+        }
       }, 1000),
 
+      setTimeout(function(){
+        that.setData({
+          numberArray: [1],
+          numberArray_all: [1]
+        })
+      }, 7000)
+
       this.setData({
-        numberArray: [1],
-        numberArray_all: [1],
-        btnDisabled : true,
-        online_disable:true,
-        start_next_text:"正在听题",        
+        btnDisabled: true,
+        online_disable: true,
+        start_next_text: "正在听题",
+        resultDesc_txt: "",
         flag: 0
       })
+      
     }
    
     if (this.data.btnText === "显示答案"){
       this.data.btnText = "开始听题";
       this.data.indexNumberArray = [];
+      
+      ansRight = 0;
+      ansWrong = 0;
+      for (let i=0; i<this.data.totalQuestion; i++){
+        if (this.data.numberArrayList[i][6]==1){
+          ansRight += 1;
+        }else{
+          ansWrong += 1;
+        }
+        // console.log(this.data.numberArrayList[i]);
+        // console.log(this.data.userInputAnser[i]);
+      }
+      var desctext = "本次答题中，正确的题目有" + ansRight + "道，错误的题目有" + ansWrong + "道，";
+      if (ansWrong == 0){
+        desctext = "恭喜你全答对了！";
+      }
+      desctext += "共花费时间：" + this.data.now_Second + "秒";
+
       this.setData({
         numberArray: this.data.numberArrayList,
         flag: 1,
         btnDisabled : false,
         start_next_text: this.data.btnText,
+        resultDesc_txt: desctext,
         online_disable: false
       })
       this.data.numberArrayList = [];
@@ -210,6 +275,7 @@ Page({
         }
       }else{
         //自动播放声音
+        // console.log(this.data.now_Second, "秒")
         this.data.indexNumberArray.push(1);
         setTimeout(function () { 
           //设置view
@@ -264,7 +330,8 @@ Page({
     this.data.indexNumberArray = [];
     this.data.indexNumberArray_tr = [];
     this.data.soundBaiduStringArray = [];
-    this.soundPathArray = []
+    this.soundPathArray = [];
+    this.now_Second = 0;
     this.setData(
       {
         numberArray: null,
