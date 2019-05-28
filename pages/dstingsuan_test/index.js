@@ -11,7 +11,7 @@ Page({
     indexNumberArray:[],
     // indexNumberArray_tr: [],
     totalQuestion:20,
-    btnText: "开始听题",
+    // btnText: "开始听题",
     soundBaiduStringArray : [],
     curDurationSecond : 3,
     myTimerHandler : -1,
@@ -58,7 +58,7 @@ Page({
     // var  now, exitTime;
     var number, shi, ge, start_next_text, tmpsoundarr, tmpsoundstr, ansRight, ansWrong, nowsecond;
     // this.data.now_Second = 0;
-    nowsecond = -6;
+    nowsecond = -10;
     let that = this;
 
     this.soundPathArray = [];
@@ -68,138 +68,84 @@ Page({
     wx.getSystemInfo({
       success: function (res) {
         that.setData({
-          scrollHeight: res.windowHeight*2
+          scrollHeight: res.windowHeight*2.5
         });
       }
     });
 
-    if (this.data.btnText === "开始听题"){
-      this.data.soundBaiduStringArray = [];
-      this.data.numberArrayList = []
-      this.GenAllQuestion();//产生所有数组
-      for (let j = 0; j < this.data.numberArrayList.length; j++) {
-        tmpsoundarr = [];
-        tmpsoundstr = "";
-        for (let i = 0; i < 4; i++) {
-          number = this.data.numberArrayList[j][i];
-          if (typeof (number) === typeof (1)) {
-            // bai = Math.floor(number / 100)
-            shi = Math.floor(number / 10);
-            ge = number % 10;
-            if (shi !== 0) {
-              if (shi === 1) {
-                tmpsoundarr.push("SHI");
-                tmpsoundstr += "十";
-              } else {
-                tmpsoundarr.push(shi);
-                tmpsoundarr.push("SHI");
-                tmpsoundstr += lstNumberHanzi[shi];
-                tmpsoundstr += "十";
-              }
-            }
-            if (ge !== 0) {
-              tmpsoundarr.push(ge);
-              tmpsoundstr += lstNumberHanzi[ge];
-            }
-            if (shi === 0 && ge === 0) {
-              tmpsoundarr.push(ge);
-              tmpsoundstr += lstNumberHanzi[ge];
-            }
-          } else {
-            if (number == "+") {
-              tmpsoundarr.push("JIA");
-              tmpsoundstr += "加";
-            }
-            if (number == "-") {
-              tmpsoundarr.push("JIAN");
-              tmpsoundstr += "减";
-            }
-            if (number == "=") {
-              tmpsoundarr.push("DENGYU");
-              tmpsoundstr += "等于";
+    
+    this.data.soundBaiduStringArray = ["现在准备听题：倒计时三"];
+    // this.data.soundBaiduStringArray.push("现在准备听题：倒计时三");
+    this.data.soundBaiduStringArray.push("二");
+    this.data.soundBaiduStringArray.push("一");
+    this.data.numberArrayList = []
+    this.GenAllQuestion();//产生所有数组
+    for (let j = 0; j < this.data.numberArrayList.length; j++) {
+      tmpsoundarr = [];
+      tmpsoundstr = "";
+      for (let i = 0; i < 4; i++) {
+        number = this.data.numberArrayList[j][i];
+        if (typeof (number) === typeof (1)) {
+          // bai = Math.floor(number / 100)
+          shi = Math.floor(number / 10);
+          ge = number % 10;
+          if (shi !== 0) {
+            if (shi === 1) {
+              tmpsoundarr.push("SHI");
+              tmpsoundstr += "十";
+            } else {
+              tmpsoundarr.push(shi);
+              tmpsoundarr.push("SHI");
+              tmpsoundstr += lstNumberHanzi[shi];
+              tmpsoundstr += "十";
             }
           }
+          if (ge !== 0) {
+            tmpsoundarr.push(ge);
+            tmpsoundstr += lstNumberHanzi[ge];
+          }
+          if (shi === 0 && ge === 0) {
+            tmpsoundarr.push(ge);
+            tmpsoundstr += lstNumberHanzi[ge];
+          }
+        } else {
+          if (number == "+") {
+            tmpsoundarr.push("JIA");
+            tmpsoundstr += "加";
+          }
+          if (number == "-") {
+            tmpsoundarr.push("JIAN");
+            tmpsoundstr += "减";
+          }
+          if (number == "=") {
+            tmpsoundarr.push("DENGYU");
+            tmpsoundstr += "等于";
+          }
         }
-        // tmpsoundarr.push("ds");
-        this.soundPathArray.push(tmpsoundarr);
-        this.data.soundBaiduStringArray.push(tmpsoundstr)
       }
-      if (app.globalData.autoBaiduVoice ==0){
-        this.innerAudioContext.src = "/Sound/" + this.soundPathArray[0][0] + ".mp3";
-        this.soundPathArray[0].splice(0, 1);
-        this.innerAudioContext.play();
-        this.data.indexNumberArray.push(1);
-      }else{
-        this.innerAudioContext.src = "http://tsn.baidu.com/text2audio?lan=zh&ctp=1&cuid=abcdxxx&tok=" + app.globalData.baidutoken['access_token'] + "&tex=" + encodeURI(encodeURI("现在准备听题：倒计时，3。。。。。。。。。2。。。。。。。。。1。。。。。。。。。开始。。。。。。。。。" + this.data.soundBaiduStringArray[0])) + "&vol=9&per=0&spd=5&pit=5&aue=3";
-        this.data.soundBaiduStringArray.splice(0, 1);
-        this.innerAudioContext.play();
-        this.data.indexNumberArray.push(1);
-      }
-      
-      this.data.myTimerHandler = setInterval(function(){
-        // that.data.now_Second += 1;
-        nowsecond += 1
-        if (nowsecond>0){
-          that.setData({
-            now_Second: nowsecond,
-            dispTimer_text: nowsecond+"秒",
-            blankScrollItem: lstNumberHanzi, //补充空格
-            scrollTop: Math.floor((nowsecond-20) / (10 + that.data.curDurationSecond)) * (30 - that.data.curDurationSecond)
-          })
-        }
-      }, 1000),
-
-      setTimeout(function(){
-        that.setData({
-          numberArray: [1],
-          pleaseAnswer:"请做答",
-          flagResult:0,
-          numberArrayData: that.data.numberArrayList
-          // numberArray_all: [1]
-        })
-      }, 7000)
-
-      this.setData({
-        btnDisabled: true,
-        online_disable: true,
-        start_next_text: "正在听题",
-        resultDesc_txt: "",
-        flag: 0
-      })
-      
+      // tmpsoundarr.push("ds");
+      this.soundPathArray.push(tmpsoundarr);
+      this.data.soundBaiduStringArray.push(tmpsoundstr)
     }
-   
-    // if (this.data.btnText === "显示答案"){
-    //   this.data.btnText = "开始听题";
-    //   this.data.indexNumberArray = [];
-      
-    //   ansRight = 0;
-    //   ansWrong = 0;
-    //   for (let i=0; i<this.data.totalQuestion; i++){
-    //     if (this.data.numberArrayList[i][6]==1){
-    //       ansRight += 1;
-    //     }else{
-    //       ansWrong += 1;
-    //     }
-    //     // console.log(this.data.numberArrayList[i]);
-    //     // console.log(this.data.userInputAnser[i]);
-    //   }
-    //   var desctext = "本次答题中，正确的题目有" + ansRight + "道，错误的题目有" + ansWrong + "道，";
-    //   if (ansWrong == 0){
-    //     desctext = "恭喜你全答对了！";
-    //   }
-    //   desctext += "共花费时间：" + this.data.now_Second + "秒";
+    this.data.soundBaiduStringArray.push("答题完毕")
 
-    //   this.setData({
-    //     numberArray: this.data.numberArrayList,
-    //     flag: 1,
-    //     btnDisabled : false,
-    //     start_next_text: this.data.btnText,
-    //     resultDesc_txt: desctext,
-    //     online_disable: false
-    //   })
-    //   this.data.numberArrayList = [];
-    // }
+    this.innerAudioContext.src = "http://tsn.baidu.com/text2audio?lan=zh&ctp=1&cuid=abcdxxx&tok=" + app.globalData.baidutoken['access_token'] + "&tex=" + encodeURI(encodeURI(this.data.soundBaiduStringArray[0])) + "&vol=9&per=0&spd=5&pit=5&aue=3";
+    this.data.soundBaiduStringArray.splice(0, 1);
+    this.innerAudioContext.play();
+    this.data.indexNumberArray.push(1);
+
+    this.data.myTimerHandler = setInterval(function () {
+      // that.data.now_Second += 1;
+      nowsecond += 1
+      if (nowsecond > 0) {
+        that.setData({
+          now_Second: nowsecond,
+          dispTimer_text: nowsecond + "秒",
+          blankScrollItem: lstNumberHanzi, //补充空格
+          scrollTop: Math.floor((nowsecond - 20) / 5) * 80
+        })
+      }
+    }, 1000)       
   },
 
   GenAllQuestion: function (e) {
@@ -225,7 +171,7 @@ Page({
   },
   
   registerAudioContext: function(e){
-    var now, exitTime;
+    var now, exitTime, duration;
     this.innerAudioContext = wx.createInnerAudioContext(); 
     let that = this;
     // this.innerAudioContext.onPlay((res) => {
@@ -242,7 +188,15 @@ Page({
       // console.log(this.data.soundBaiduStringArray)      
       //自动播放声音
       // console.log(this.data.now_Second, "秒")
-      this.data.indexNumberArray.push(1);
+      that.data.indexNumberArray.push(1);
+      // console.log(that.data.indexNumberArray.length, that.data.indexNumberArray)
+      if (that.data.indexNumberArray.length < 4 ){
+        duration = 1000
+      }else{
+        duration = this.data.curDurationSecond * 1000
+      }
+      // console.log(duration)
+      // console.log(this.data.curDurationSecond, 'this')
       setTimeout(function () { 
         //设置view
         // console.log(that.data.curDurationSecond, 111,2)
@@ -250,21 +204,32 @@ Page({
           that.innerAudioContext.src = "http://tsn.baidu.com/text2audio?lan=zh&ctp=1&cuid=abcdxxx&tok=" + app.globalData.baidutoken['access_token'] + "&tex=" + encodeURI(encodeURI(that.data.soundBaiduStringArray[0])) + "&vol=9&per=0&spd=5&pit=5&aue=3";
           that.innerAudioContext.play();
           that.data.soundBaiduStringArray.splice(0, 1);
-          that.setData({
-            numberArray: that.data.indexNumberArray,
-            pleaseAnswer: "请做答",
-            flagResult: 0,
-            numberArrayData: that.data.numberArrayList,
-            // numberArray_all: that.data.indexNumberArray,
-            flag: 0
-          })
+          // console.log(that.data.soundBaiduStringArray.length, '======')
+          if (that.data.soundBaiduStringArray.length<=21){
+            that.setData({
+              trwidth: "600rpx",
+              numberArray: that.data.indexNumberArray,
+              pleaseAnswer: "请做答",
+              flagResult: 0,
+              numberArrayData: that.data.numberArrayList,
+              // numberArray_all: that.data.indexNumberArray,
+              flag: 0
+            })
+          }else{
+            that.setData({
+              numberArray:null,
+              btnDisabled: true,
+              online_disable: true,
+              start_next_text: "正在听题",
+            })
+          }          
         } else {
           clearInterval(that.data.myTimerHandler);
 
-          that.data.btnText = "开始听题";
           that.data.indexNumberArray = [];
           that.setData({
-            start_next_text: that.data.btnText,
+            trwidth: "100%",
+            start_next_text: "开始听题",
             btnDisabled: false,
             online_disable:false,
             pleaseAnswer: "",
@@ -275,10 +240,19 @@ Page({
             // ansDisable: true
           })
         }
-      }, that.data.curDurationSecond*1000)      
+      }, duration)      
     })    
     this.innerAudioContext.onError((res) => {      // 播放音频失败的回调      
       console.log('播放音频失败' + res);   
+      wx.showModal({
+        title: "播放失败",
+        content: '请检查网络',
+        showCancel: false,
+        success: function (res) {
+        //  that.onLoad()
+        }
+      })
+      clearInterval(that.data.myTimerHandler);
     })    
     this.innerAudioContext.onStop((res) => {   
       // this.data.indexNumberArray += 1;   

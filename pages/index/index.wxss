@@ -39,7 +39,7 @@ background-color: rgb(240, 113, 9);
 }
 
 .buttonNT{
-  margin-top: 20rpx;
+  margin-top: 50rpx;
   margin-bottom: 20rpx;
   width: 450rpx;
   background: #14a1fd;

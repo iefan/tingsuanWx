@@ -2,9 +2,9 @@
 .ans_input{
   background: rgb(255,255,255);
   height: 90%;
-  /* width: 15%; */
+  /* width: 50%; */
   width: 100rpx;
-  margin-top: 15rpx;
+  /* margin-top: 15rpx; */
   color:#fdab14d8
 }
 .descinfo{
@@ -40,60 +40,72 @@
 }
 
 .tr {
-  width: 100%;
+  /* width: 100%; */
   /* width: 600rpx; */
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  margin-bottom: 10rpx;
+  margin-right: 10rpx;
+  /* justify-content: space-between; */
+  justify-content: center;
 }
 .resultDesc{
   color: rgb(226, 137, 19);
   font-size: 36rpx;
 }
 .td1 {
-  padding: 10rpx;
+  /* padding: 10rpx;
   border-bottom: 1rpx solid #dadada;
-  border-right: 1rpx solid #dadada;
+  border-right: 1rpx solid #dadada; */
   text-align: center;
-  /* width: 100rpx; */
-  width:25%;
-  color:#0533caf1;
+  width: 120rpx;
+  color: green;
+  font-size: 36rpx;
+  /* width:50%; */
+  /* color:#0533caf1; */
+}
+.ans_input_blank{
+  width:0rpx;
 }
 .td {
-  padding: 10rpx;
+  /* padding: 10rpx;
   border-bottom: 1rpx solid #dadada;
-  border-right: 1rpx solid #dadada;
+  border-right: 1rpx solid #dadada; */
   text-align: center;
-  /* width: 100rpx; */
-  width:25%;
-  color:#0533caf1;
+  width: 120rpx;
+  color: green;
+  font-size: 36rpx;
+  margin-right: 30rpx;
+  /* width:50%; */
+  /* color:#0533caf1; */
 }
 .td_ans {
-  /* margin-left: 30rpx; */
+  margin-left: 30rpx;
   /* padding: 10rpx; */
-  font-size: 30rpx;
-  border-bottom: 1px solid #dadada;
-  border-right: 1px solid #dadada;
+  font-size: 34rpx;
+  color: blue;
+  /* border-bottom: 1px solid #dadada; */
+  /* border-right: 1px solid #dadada; */
   text-align: left;
-  width:200rpx;
+  width:30%;
 }
 .td_ans_wrong {
   padding: 10rpx;
-  font-size: 20rpx;
-  border-bottom: 1px solid #dadada;
-  border-right: 1px solid #dadada;
+  font-size: 30rpx;
+  /* border-bottom: 1px solid #dadada; */
+  /* border-right: 1px solid #dadada; */
   text-align: left;
   color: rgb(241, 11, 11);
-  width:5%
+  width:15%
 }
 .td_ans_right {
   padding: 10rpx;
-  font-size: 20rpx;
-  border-bottom: 1px solid #dadada;
-  border-right: 1px solid #dadada;
+  font-size: 30rpx;
+  /* border-bottom: 1px solid #dadada; */
+  /* border-right: 1px solid #dadada; */
   text-align: left;
   color: rgb(41, 134, 4);
-  width:5%
+  width:15%
 }
 .td_blank {
   padding: 10rpx;
@@ -130,7 +142,7 @@
 }
 
 .scrollwindow{
-  margin-left: 100rpx;
+  /* margin-left: 100rpx; */
   width: 100%;
 }
 
