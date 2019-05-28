@@ -15,7 +15,7 @@
 
 .buttonNT_grade1{
   margin-top: 40rpx;
-  margin-bottom: 20rpx;
+  margin-bottom: 60rpx;
   width: 450rpx;
   background: #fdab14;
   color: #fff;

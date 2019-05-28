@@ -11,7 +11,7 @@ Page({
     indexNumberArray:[],
     // indexNumberArray_tr: [],
     totalQuestion:20,
-    // btnText: "开始听题",
+    btnText: "开始听题",
     soundBaiduStringArray : [],
     curDurationSecond : 3,
     myTimerHandler : -1,
@@ -58,11 +58,8 @@ Page({
     // var  now, exitTime;
     var number, shi, ge, start_next_text, tmpsoundarr, tmpsoundstr, ansRight, ansWrong, nowsecond;
     // this.data.now_Second = 0;
-    nowsecond = -10;
-    let that = this;
-
-    this.soundPathArray = [];
     var lstNumberHanzi = ["零", "一", "二", "三", "四", "五", "六", "七", "八", "九"];
+    let that = this;
 
     //设置流动窗口的高度
     wx.getSystemInfo({
@@ -73,79 +70,89 @@ Page({
       }
     });
 
-    
-    this.data.soundBaiduStringArray = ["现在准备听题：倒计时三"];
-    // this.data.soundBaiduStringArray.push("现在准备听题：倒计时三");
-    this.data.soundBaiduStringArray.push("二");
-    this.data.soundBaiduStringArray.push("一");
-    this.data.numberArrayList = []
-    this.GenAllQuestion();//产生所有数组
-    for (let j = 0; j < this.data.numberArrayList.length; j++) {
-      tmpsoundarr = [];
-      tmpsoundstr = "";
-      for (let i = 0; i < 4; i++) {
-        number = this.data.numberArrayList[j][i];
-        if (typeof (number) === typeof (1)) {
-          // bai = Math.floor(number / 100)
-          shi = Math.floor(number / 10);
-          ge = number % 10;
-          if (shi !== 0) {
-            if (shi === 1) {
-              tmpsoundarr.push("SHI");
-              tmpsoundstr += "十";
-            } else {
-              tmpsoundarr.push(shi);
-              tmpsoundarr.push("SHI");
-              tmpsoundstr += lstNumberHanzi[shi];
-              tmpsoundstr += "十";
+    if (this.data.btnText =="开始听题"){
+      this.data.btnText = "正在听题";
+      this.soundPathArray = [];
+      nowsecond = -12;
+
+      this.data.soundBaiduStringArray = ["现在准备听题：倒计时。三"];
+      // this.data.soundBaiduStringArray.push("现在准备听题：倒计时三");
+      this.data.soundBaiduStringArray.push("二");
+      this.data.soundBaiduStringArray.push("一。。开始");
+      this.data.numberArrayList = []
+      this.GenAllQuestion();//产生所有数组
+      for (let j = 0; j < this.data.numberArrayList.length; j++) {
+        tmpsoundarr = [];
+        tmpsoundstr = "";
+        for (let i = 0; i < 4; i++) {
+          number = this.data.numberArrayList[j][i];
+          if (typeof (number) === typeof (1)) {
+            // bai = Math.floor(number / 100)
+            shi = Math.floor(number / 10);
+            ge = number % 10;
+            if (shi !== 0) {
+              if (shi === 1) {
+                tmpsoundarr.push("SHI");
+                tmpsoundstr += "十";
+              } else {
+                tmpsoundarr.push(shi);
+                tmpsoundarr.push("SHI");
+                tmpsoundstr += lstNumberHanzi[shi];
+                tmpsoundstr += "十";
+              }
+            }
+            if (ge !== 0) {
+              tmpsoundarr.push(ge);
+              tmpsoundstr += lstNumberHanzi[ge];
+            }
+            if (shi === 0 && ge === 0) {
+              tmpsoundarr.push(ge);
+              tmpsoundstr += lstNumberHanzi[ge];
+            }
+          } else {
+            if (number == "+") {
+              tmpsoundarr.push("JIA");
+              tmpsoundstr += "加";
+            }
+            if (number == "-") {
+              tmpsoundarr.push("JIAN");
+              tmpsoundstr += "减";
+            }
+            if (number == "=") {
+              tmpsoundarr.push("DENGYU");
+              tmpsoundstr += "等于";
             }
           }
-          if (ge !== 0) {
-            tmpsoundarr.push(ge);
-            tmpsoundstr += lstNumberHanzi[ge];
-          }
-          if (shi === 0 && ge === 0) {
-            tmpsoundarr.push(ge);
-            tmpsoundstr += lstNumberHanzi[ge];
-          }
-        } else {
-          if (number == "+") {
-            tmpsoundarr.push("JIA");
-            tmpsoundstr += "加";
-          }
-          if (number == "-") {
-            tmpsoundarr.push("JIAN");
-            tmpsoundstr += "减";
-          }
-          if (number == "=") {
-            tmpsoundarr.push("DENGYU");
-            tmpsoundstr += "等于";
-          }
         }
+        // tmpsoundarr.push("ds");
+        this.soundPathArray.push(tmpsoundarr);
+        this.data.soundBaiduStringArray.push(tmpsoundstr)
       }
-      // tmpsoundarr.push("ds");
-      this.soundPathArray.push(tmpsoundarr);
-      this.data.soundBaiduStringArray.push(tmpsoundstr)
-    }
-    this.data.soundBaiduStringArray.push("答题完毕")
+      this.data.soundBaiduStringArray.push("答题完毕")
 
-    this.innerAudioContext.src = "http://tsn.baidu.com/text2audio?lan=zh&ctp=1&cuid=abcdxxx&tok=" + app.globalData.baidutoken['access_token'] + "&tex=" + encodeURI(encodeURI(this.data.soundBaiduStringArray[0])) + "&vol=9&per=0&spd=5&pit=5&aue=3";
-    this.data.soundBaiduStringArray.splice(0, 1);
-    this.innerAudioContext.play();
-    this.data.indexNumberArray.push(1);
+      this.innerAudioContext.src = "http://tsn.baidu.com/text2audio?lan=zh&ctp=1&cuid=abcdxxx&tok=" + app.globalData.baidutoken['access_token'] + "&tex=" + encodeURI(encodeURI(this.data.soundBaiduStringArray[0])) + "&vol=9&per=0&spd=5&pit=5&aue=3";
+      this.data.soundBaiduStringArray.splice(0, 1);
+      this.innerAudioContext.play();
+      this.data.indexNumberArray.push(1);
 
-    this.data.myTimerHandler = setInterval(function () {
-      // that.data.now_Second += 1;
-      nowsecond += 1
-      if (nowsecond > 0) {
-        that.setData({
-          now_Second: nowsecond,
-          dispTimer_text: nowsecond + "秒",
-          blankScrollItem: lstNumberHanzi, //补充空格
-          scrollTop: Math.floor((nowsecond - 20) / 5) * 80
-        })
-      }
-    }, 1000)       
+      this.data.myTimerHandler = setInterval(function () {
+        // that.data.now_Second += 1;
+        nowsecond += 1
+        if (nowsecond > 0) {
+          that.setData({
+            now_Second: nowsecond,
+            dispTimer_text: nowsecond + "秒",
+            blankScrollItem: lstNumberHanzi //补充空格
+          })
+        }
+        if (nowsecond > 20) {
+          that.setData({
+            scrollTop: 500 + Math.floor((nowsecond - 20) / 5) * 100
+          })
+        }
+
+      }, 1000) 
+    }      
   },
 
   GenAllQuestion: function (e) {
@@ -171,7 +178,7 @@ Page({
   },
   
   registerAudioContext: function(e){
-    var now, exitTime, duration;
+    var now, exitTime, duration, rightnums=0, wrongnums=0;
     this.innerAudioContext = wx.createInnerAudioContext(); 
     let that = this;
     // this.innerAudioContext.onPlay((res) => {
@@ -191,9 +198,9 @@ Page({
       that.data.indexNumberArray.push(1);
       // console.log(that.data.indexNumberArray.length, that.data.indexNumberArray)
       if (that.data.indexNumberArray.length < 4 ){
-        duration = 1000
+        duration = 200;
       }else{
-        duration = this.data.curDurationSecond * 1000
+        duration = this.data.curDurationSecond * 1000;
       }
       // console.log(duration)
       // console.log(this.data.curDurationSecond, 'this')
@@ -216,6 +223,7 @@ Page({
               flag: 0
             })
           }else{
+            that.data.btnText = "正在听题";
             that.setData({
               numberArray:null,
               btnDisabled: true,
@@ -226,7 +234,25 @@ Page({
         } else {
           clearInterval(that.data.myTimerHandler);
 
+          for (let i = 0; i < that.data.numberArrayList.length; i++){
+            // console.log(that.data.numberArrayList[i][6], '====')
+            if (that.data.numberArrayList[i][6]==1){
+              rightnums += 1;
+            }else{
+              wrongnums += 1;
+            }
+          }
+          wx.showModal({
+            title: "测试结束",
+            content: "你一共答对了" + rightnums + "道，\n答错了" + wrongnums + "道，\n共用时"+that.data.now_Second +"秒",
+            showCancel: false,
+            success: function (res) {
+              //  that.onLoad()
+            }
+          })
+
           that.data.indexNumberArray = [];
+          that.data.btnText = "开始听题";
           that.setData({
             trwidth: "100%",
             start_next_text: "开始听题",
@@ -278,6 +304,7 @@ Page({
     this.data.soundBaiduStringArray = [];
     this.soundPathArray = [];
     this.now_Second = 0;
+    this.data.btnText = "开始听题";
     this.setData(
       {
         numberArray: null,
