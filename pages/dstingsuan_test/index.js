@@ -68,7 +68,7 @@ Page({
     wx.getSystemInfo({
       success: function (res) {
         that.setData({
-          scrollHeight: res.windowHeight*1.2
+          scrollHeight: res.windowHeight*2
         });
       }
     });
@@ -144,7 +144,7 @@ Page({
             now_Second: nowsecond,
             dispTimer_text: nowsecond+"秒",
             blankScrollItem: lstNumberHanzi, //补充空格
-            scrollTop: Math.floor((nowsecond-10) / (10 + that.data.curDurationSecond)) * (20 - that.data.curDurationSecond)
+            scrollTop: Math.floor((nowsecond-20) / (10 + that.data.curDurationSecond)) * (30 - that.data.curDurationSecond)
           })
         }
       }, 1000),
@@ -152,7 +152,10 @@ Page({
       setTimeout(function(){
         that.setData({
           numberArray: [1],
-          numberArray_all: [1]
+          pleaseAnswer:"请做答",
+          flagResult:0,
+          numberArrayData: that.data.numberArrayList
+          // numberArray_all: [1]
         })
       }, 7000)
 
@@ -166,37 +169,37 @@ Page({
       
     }
    
-    if (this.data.btnText === "显示答案"){
-      this.data.btnText = "开始听题";
-      this.data.indexNumberArray = [];
+    // if (this.data.btnText === "显示答案"){
+    //   this.data.btnText = "开始听题";
+    //   this.data.indexNumberArray = [];
       
-      ansRight = 0;
-      ansWrong = 0;
-      for (let i=0; i<this.data.totalQuestion; i++){
-        if (this.data.numberArrayList[i][6]==1){
-          ansRight += 1;
-        }else{
-          ansWrong += 1;
-        }
-        // console.log(this.data.numberArrayList[i]);
-        // console.log(this.data.userInputAnser[i]);
-      }
-      var desctext = "本次答题中，正确的题目有" + ansRight + "道，错误的题目有" + ansWrong + "道，";
-      if (ansWrong == 0){
-        desctext = "恭喜你全答对了！";
-      }
-      desctext += "共花费时间：" + this.data.now_Second + "秒";
+    //   ansRight = 0;
+    //   ansWrong = 0;
+    //   for (let i=0; i<this.data.totalQuestion; i++){
+    //     if (this.data.numberArrayList[i][6]==1){
+    //       ansRight += 1;
+    //     }else{
+    //       ansWrong += 1;
+    //     }
+    //     // console.log(this.data.numberArrayList[i]);
+    //     // console.log(this.data.userInputAnser[i]);
+    //   }
+    //   var desctext = "本次答题中，正确的题目有" + ansRight + "道，错误的题目有" + ansWrong + "道，";
+    //   if (ansWrong == 0){
+    //     desctext = "恭喜你全答对了！";
+    //   }
+    //   desctext += "共花费时间：" + this.data.now_Second + "秒";
 
-      this.setData({
-        numberArray: this.data.numberArrayList,
-        flag: 1,
-        btnDisabled : false,
-        start_next_text: this.data.btnText,
-        resultDesc_txt: desctext,
-        online_disable: false
-      })
-      this.data.numberArrayList = [];
-    }
+    //   this.setData({
+    //     numberArray: this.data.numberArrayList,
+    //     flag: 1,
+    //     btnDisabled : false,
+    //     start_next_text: this.data.btnText,
+    //     resultDesc_txt: desctext,
+    //     online_disable: false
+    //   })
+    //   this.data.numberArrayList = [];
+    // }
   },
 
   GenAllQuestion: function (e) {
@@ -236,74 +239,43 @@ Page({
       if (app.globalData.scene == -2){
         return;
       }
-      // console.log(this.data.soundBaiduStringArray)
-      if (app.globalData.autoBaiduVoice ==0){
-        if (this.soundPathArray[0].length > 0){
-          this.innerAudioContext.src = "/Sound/" + this.soundPathArray[0][0] + ".mp3"
-          this.innerAudioContext.play();
-          this.soundPathArray[0].splice(0,1); //切除第1个
-        }else{
-          // console.log("开始切除一个式子：")
-          // console.log(this.soundPathArray[0]);
-          this.data.indexNumberArray.push(1);
+      // console.log(this.data.soundBaiduStringArray)      
+      //自动播放声音
+      // console.log(this.data.now_Second, "秒")
+      this.data.indexNumberArray.push(1);
+      setTimeout(function () { 
+        //设置view
+        // console.log(that.data.curDurationSecond, 111,2)
+        if (that.data.soundBaiduStringArray.length != 0) {
+          that.innerAudioContext.src = "http://tsn.baidu.com/text2audio?lan=zh&ctp=1&cuid=abcdxxx&tok=" + app.globalData.baidutoken['access_token'] + "&tex=" + encodeURI(encodeURI(that.data.soundBaiduStringArray[0])) + "&vol=9&per=0&spd=5&pit=5&aue=3";
+          that.innerAudioContext.play();
+          that.data.soundBaiduStringArray.splice(0, 1);
+          that.setData({
+            numberArray: that.data.indexNumberArray,
+            pleaseAnswer: "请做答",
+            flagResult: 0,
+            numberArrayData: that.data.numberArrayList,
+            // numberArray_all: that.data.indexNumberArray,
+            flag: 0
+          })
+        } else {
+          clearInterval(that.data.myTimerHandler);
 
-          setTimeout(function(){
-            //切除第一个式子
-            that.soundPathArray.splice(0, 1);
-            if (that.soundPathArray.length != 0) {
-              that.innerAudioContext.src = "/Sound/" + that.soundPathArray[0][0] + ".mp3"
-              that.innerAudioContext.play();
-              that.soundPathArray[0].splice(0, 1); //切除第1个
-              that.setData({
-                numberArray: that.data.indexNumberArray,
-                numberArray_all: that.data.indexNumberArray,
-                flag: 0
-              })
-            } else {
-              that.data.btnText = "显示答案";
-              that.data.indexNumberArray = [];
-              that.setData({
-                start_next_text: that.data.btnText,
-                btnDisabled: false,
-                online_disable: false
-                // quesDisabled: false,
-                // ansDisable: true
-              })
-            }
-          }, that.data.curDurationSecond*1000)
-          
+          that.data.btnText = "开始听题";
+          that.data.indexNumberArray = [];
+          that.setData({
+            start_next_text: that.data.btnText,
+            btnDisabled: false,
+            online_disable:false,
+            pleaseAnswer: "",
+            flagResult: 1,
+            numberArrayData: that.data.numberArrayList,
+            flag:0
+            // quesDisabled: false,
+            // ansDisable: true
+          })
         }
-      }else{
-        //自动播放声音
-        // console.log(this.data.now_Second, "秒")
-        this.data.indexNumberArray.push(1);
-        setTimeout(function () { 
-          //设置view
-          // console.log(that.data.curDurationSecond, 111,2)
-          if (that.data.soundBaiduStringArray.length != 0) {
-            that.innerAudioContext.src = "http://tsn.baidu.com/text2audio?lan=zh&ctp=1&cuid=abcdxxx&tok=" + app.globalData.baidutoken['access_token'] + "&tex=" + encodeURI(encodeURI(that.data.soundBaiduStringArray[0])) + "&vol=9&per=0&spd=5&pit=5&aue=3";
-            that.innerAudioContext.play();
-            that.data.soundBaiduStringArray.splice(0, 1);
-            that.setData({
-              numberArray: that.data.indexNumberArray,
-              numberArray_all: that.data.indexNumberArray,
-              flag: 0
-            })
-          } else {
-            clearInterval(that.data.myTimerHandler);
-
-            that.data.btnText = "显示答案";
-            that.data.indexNumberArray = [];
-            that.setData({
-              start_next_text: that.data.btnText,
-              btnDisabled: false,
-              online_disable:false
-              // quesDisabled: false,
-              // ansDisable: true
-            })
-          }
-        }, that.data.curDurationSecond*1000)
-      }
+      }, that.data.curDurationSecond*1000)      
     })    
     this.innerAudioContext.onError((res) => {      // 播放音频失败的回调      
       console.log('播放音频失败' + res);   
