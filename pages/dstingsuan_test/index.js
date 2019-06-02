@@ -61,10 +61,12 @@ Page({
     var lstNumberHanzi = ["零", "一", "二", "三", "四", "五", "六", "七", "八", "九"];
     let that = this;
 
-    //设置流动窗口的高度
+    //设置滚动窗口的高度
     wx.getSystemInfo({
       success: function (res) {
         that.setData({
+          dispTimer_text:"",
+          numberArray: null,
           scrollHeight: res.windowHeight*2.5
         });
       }
@@ -197,8 +199,8 @@ Page({
       // console.log(this.data.now_Second, "秒")
       that.data.indexNumberArray.push(1);
       // console.log(that.data.indexNumberArray.length, that.data.indexNumberArray)
-      if (that.data.indexNumberArray.length < 4 ){
-        duration = 200;
+      if (that.data.indexNumberArray.length < 4 || that.data.indexNumberArray.length==24 ){
+        duration = 100;
       }else{
         duration = this.data.curDurationSecond * 1000;
       }
@@ -227,7 +229,7 @@ Page({
             that.setData({
               numberArray:null,
               btnDisabled: true,
-              online_disable: true,
+              // online_disable: true,
               start_next_text: "正在听题",
             })
           }          

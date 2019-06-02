@@ -84,7 +84,6 @@ App({
     wx.setKeepScreenOn({
       keepScreenOn: true
     })
-    // console.log('123');
     // this.getBaiduToken();
     // 展示本地存储能力
     // var logs = wx.getStorageSync('logs') || []
@@ -102,7 +101,7 @@ App({
     userInfo: null,
     scene : 0,
     baidutoken: {
-      "access_token":"24.6cdff12af1744bcedc1f33d6ce7b4535.2592000.1561243751.282335-16302304"},
+      "access_token": "24.d9ac6713cfde58af3b29354847a60d36.2592000.1562039534.282335-16302304"},
     autoBaiduVoice:0
 
   }
