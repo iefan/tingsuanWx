@@ -75,7 +75,7 @@ Page({
     if (this.data.btnText =="开始听题"){
       this.data.btnText = "正在听题";
       this.soundPathArray = [];
-      nowsecond = -12;
+      nowsecond = -10;
 
       this.data.soundBaiduStringArray = ["现在准备听题：倒计时。三"];
       // this.data.soundBaiduStringArray.push("现在准备听题：倒计时三");
@@ -199,7 +199,7 @@ Page({
       // console.log(this.data.now_Second, "秒")
       that.data.indexNumberArray.push(1);
       // console.log(that.data.indexNumberArray.length, that.data.indexNumberArray)
-      if (that.data.indexNumberArray.length < 4 || that.data.indexNumberArray.length==24 ){
+      if (that.data.indexNumberArray.length <= 4 ){
         duration = 100;
       }else{
         duration = this.data.curDurationSecond * 1000;
