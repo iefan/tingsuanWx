@@ -18,11 +18,13 @@
   </view>
   <view class="usermotto">
     <view>
-      <text class="user-motto">{{motto}}</text>
+      <text class="user-motto" bindtap="ChangeMinyan">{{motto}}</text>
     </view>
-    <view>
+    <official-account></official-account>
+    <!-- <view>
       <image class="gongzhonghao" src="/Sound/gongzhonghao.jpg"></image>
     </view>
-    
+     -->
   </view>
+  <!-- <official-account></official-account> -->
 </view>

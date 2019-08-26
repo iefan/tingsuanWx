@@ -4,7 +4,9 @@ const app = getApp()
 
 Page({
   data: {
-    motto: '反馈请扫描'
+    // motto: '本程序使用完全免费\n\n个人公众号：娜驿站',
+    motto: '名人名言',
+    mingyan:[]
     // mytok:[]
     // savedFilePath:[]
     // userInfo: {},
@@ -18,6 +20,37 @@ Page({
       url: '../dstingsuan_test/index'
     })
   },
+  //读取名人名言
+  readMingyan: function(){
+    var rnd=0;
+    // let that = this;
+    // wx.chooseMessageFile({
+    //   count: 10,
+    //   type: 'image',
+    //   success(res) {
+    //     // tempFilePath可以作为img标签的src属性显示图片
+    //     const tempFilePaths = res.tempFilePaths
+    //     print(tempFilePaths)
+    //   }
+    // })
+
+    wx.getFileSystemManager().readFile({
+      filePath: "/Sound/mingyan.jpg",
+      encoding: 'utf-8',
+      success: res => {
+        //返回临时文件路径
+        this.data.mingyan = res.data.split("\n");
+        rnd = Math.floor(Math.random() * this.data.mingyan.length);
+        // console.log(this.data.mingyan[rnd]);
+        this.setData({
+          motto: "　　" + this.data.mingyan[rnd]
+        })
+      },
+      fail: console.error
+    })
+    return;
+  },
+
   //下载合成音频文件
   welcomeDsTinsuan: function(){
     this.innerAudioContext = wx.createInnerAudioContext();
@@ -102,7 +135,17 @@ Page({
       url: '../dstingsuan_200/index'
     })
   },
-
+  ChangeMinyan: function(){
+    var rnd = 0, tmpmingyan1 = "", tmpmingyan2 = "";
+    rnd = Math.floor(Math.random() * this.data.mingyan.length);
+    this.data.motto = this.data.mingyan[rnd];
+    // tmpmingyan1 = this.data.motto.slice(0, this.data.motto.lastIndexOf("——"))
+    // tmpmingyan2 = this.data.motto.slice(this.data.motto.lastIndexOf("——") - 1)
+    // console.log(tmpmingyan1, tmpmingyan2);
+    this.setData({
+      motto: "　　" +this.data.motto,
+    })
+  },
   Grade2Tingsuan: function() {
     wx.navigateTo({
       url: '../dstingsuan_grade2/index'
@@ -117,6 +160,7 @@ Page({
   onLoad: function () {
     app.checkUpdate();
     this.welcomeDsTinsuan();
+    this.readMingyan();
     // this.ceshi();
   },
 })

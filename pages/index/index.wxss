@@ -75,9 +75,14 @@ background-color: rgb(240, 113, 9);
 .usermotto {
   position: fixed;
   /* margin-top: 20px; */
-  width: 100%;
-  text-align: center;
+  margin-left: 0px;
+  width: 96%;
+  text-align: left;
   bottom: 30rpx;
+  font-size:40rpx;
+  line-height: 30px;
+  /* background: #fdab14; */
+  color: rgb(4, 20, 168);
 }
 
 page{
