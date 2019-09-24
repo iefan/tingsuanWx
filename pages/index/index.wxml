@@ -20,11 +20,11 @@
     <view>
       <text class="user-motto" bindtap="ChangeMinyan">{{motto}}</text>
     </view>
-    <official-account></official-account>
-    <!-- <view>
+    <!-- <official-account></official-account> -->
+  </view>
+  
+    <view>
       <image class="gongzhonghao" src="/Sound/gongzhonghao.jpg"></image>
     </view>
-     -->
-  </view>
-  <!-- <official-account></official-account> -->
+  
 </view>
