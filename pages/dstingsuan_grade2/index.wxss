@@ -38,8 +38,8 @@
 }
 
 .gongzhonghao{
-  width: 200rpx;
-  height: 200rpx;
+  width: 240rpx;
+  height: 240rpx;
   margin: 0rpx;
   /* border-radius: 100%; */
 

@@ -101,7 +101,7 @@ App({
     userInfo: null,
     scene : 0,
     baidutoken: {
-      "access_token": "24.ae1e180b8bdd83a711b9862ccc40316f.2592000.1571892450.282335-16302304"},
+      "access_token": "24.db1bc1e734f6bbde5d174cf184b40276.2592000.1573448131.282335-16302304"},
     autoBaiduVoice:0
 
   }

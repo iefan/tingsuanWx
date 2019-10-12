@@ -48,8 +48,8 @@ background-color: rgb(240, 113, 9);
 }
 
 .gongzhonghao{
-  width: 200rpx;
-  height: 200rpx;
+  width: 280rpx;
+  height: 280rpx;
   margin: 0rpx;
   text-align: center;
   /* border-radius: 100%; */

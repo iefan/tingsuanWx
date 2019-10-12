@@ -26,5 +26,8 @@
     <view>
       <image class="gongzhonghao" src="/Sound/gongzhonghao.jpg"></image>
     </view>
+    <view>
+    <text style="color: #ff7600; font-size: 34rpx;">▲一位数学老师的笔记▲</text>
+    </view>
   
 </view>
